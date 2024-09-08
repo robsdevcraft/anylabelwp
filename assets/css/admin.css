@@ -1,0 +1,29 @@
+/**
+ * AnylabelWP Admin Styles
+ * 
+ * This file contains general styles for the AnylabelWP plugin admin area.
+ */
+
+/* Example: Style for a custom button class */
+.anylabelwp-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #0073aa;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.anylabelwp-button:hover {
+    background-color: #005177;
+}
+
+/* Example: Style for settings sections */
+.anylabelwp-settings-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+}
+
+/* You can add more general admin styles here */
