@@ -30,7 +30,7 @@ class AnylabelWP_Fluent_SMTP {
         if ( isset( $submenu['options-general.php'] ) ) {
             foreach ( $submenu['options-general.php'] as $key => $value ) {
                 if ( 'FluentSMTP' == $value[0] ) {
-                    $submenu['options-general.php'][$key][0] = 'SMTP';
+                    $submenu['options-general.php'][$key][0] = esc_html__('SMTP', 'anylabelwp-plugin');
                     break;
                 }
             }
@@ -38,18 +38,39 @@ class AnylabelWP_Fluent_SMTP {
     }
 
     public function register_settings() {
-        register_setting( 'anylabelwp_settings', 'anylabelwp_fluent_smtp_logo_url', 'sanitize_text_field' );
+        // Verify nonce before processing settings
+        if (isset($_POST['anylabelwp_fluent_smtp_nonce']) && wp_verify_nonce($_POST['anylabelwp_fluent_smtp_nonce'], 'anylabelwp_fluent_smtp_settings')) {
+            // Process settings here
+        }
+
+        register_setting( 'anylabelwp_settings', 'anylabelwp_fluent_smtp_logo_url', array(
+            'sanitize_callback' => 'esc_url_raw',
+            'default' => '',
+            'validate_callback' => array($this, 'validate_logo_url')
+        ));
         // Register any other Fluent SMTP specific settings here
     }
 
+    public function validate_logo_url($url) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+            return false;
+        }
+        return true;
+    }
+
     public function render_settings() {
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.', 'anylabelwp-plugin'));
+        }
+
+        wp_nonce_field('anylabelwp_fluent_smtp_settings', 'anylabelwp_fluent_smtp_nonce');
         ?>
-        <h2>Fluent SMTP Settings</h2>
+        <h2><?php esc_html_e('Fluent SMTP Settings', 'anylabelwp-plugin'); ?></h2>
         <table class="form-table">
             <tr valign="top">
-                <th scope="row">Fluent SMTP Logo URL</th>
+                <th scope="row"><?php esc_html_e('Fluent SMTP Logo URL', 'anylabelwp-plugin'); ?></th>
                 <td>
-                    <input type="text" name="anylabelwp_fluent_smtp_logo_url" value="<?php echo esc_attr( get_option( 'anylabelwp_fluent_smtp_logo_url' ) ); ?>" />
+                    <input type="text" name="anylabelwp_fluent_smtp_logo_url" value="<?php echo esc_attr(get_option('anylabelwp_fluent_smtp_logo_url')); ?>" />
                 </td>
             </tr>
             <!-- Add more Fluent SMTP specific settings here -->
@@ -60,7 +81,7 @@ class AnylabelWP_Fluent_SMTP {
     public function fluent_smtp_not_active_notice() {
         ?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php _e('Fluent SMTP is not active. AnylabelWP customizations for Fluent SMTP will not be applied.', 'anylabelwp'); ?></p>
+            <p><?php echo esc_html__('Fluent SMTP is not active. AnylabelWP customizations for Fluent SMTP will not be applied.', 'anylabelwp-plugin'); ?></p>
         </div>
         <?php
     }

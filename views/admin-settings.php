@@ -10,6 +10,7 @@
 
         <?php do_action( 'anylabelwp_render_module_settings' ); ?>
 
+        <?php wp_nonce_field( 'anylabelwp_settings', 'anylabelwp_settings_nonce' ); ?>
         <?php submit_button( 'Save Changes' ); ?>
     </form>
 </div>

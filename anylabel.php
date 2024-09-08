@@ -1,4 +1,6 @@
 <?php
+namespace AnylabelWP;
+
 /**
  * Plugin Name: AnylabelWP
  * Plugin URI:  # (Replace with your plugin URI if any)
@@ -8,7 +10,7 @@
  * Author URI:  # (Replace with your plugin URI if any)
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: anylabelwp
+ * Text Domain: anylabelwp-plugin
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +28,7 @@ if (!function_exists('is_plugin_active')) {
 }
 
 function run_anylabelwp() {
-    $plugin = new AnylabelWP_Loader();
+    $plugin = new \AnylabelWP\Loader();
     $plugin->run();
 }
 

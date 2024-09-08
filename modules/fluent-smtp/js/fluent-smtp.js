@@ -24,9 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn('Logo image element not found or new image URL is missing');
     }
     
+    // Array of hashes for pages that should be blocked
+    const blockedHashes = ['#/support', '#/documentation', '#/notification-settings'];
+
+    // Listen for changes in the URL hash
     window.addEventListener('hashchange', function() {
-        const blockedHashes = ['#/support', '#/documentation', '#/notification-settings'];
-        if (blockedHashes.includes(window.location.hash)) {
+        // Get the current hash from the URL
+        const currentHash = new URL(window.location.href).hash;
+
+        // Check if the current hash is in the list of blocked hashes
+        if (blockedHashes.includes(currentHash)) {
+            // If it is, redirect to the main Fluent SMTP settings page
             window.location.href = '/wp-admin/options-general.php?page=fluent-mail#/';
         }
     });
