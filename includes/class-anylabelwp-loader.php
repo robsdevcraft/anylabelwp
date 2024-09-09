@@ -13,6 +13,7 @@ class Loader {
     private function load_modules() {
         $modules = array(
             'fluent-smtp' => 'Fluent_SMTP',
+            'fluent-forms' => 'Fluent_Forms',
             // Add other modules here
         );
 
