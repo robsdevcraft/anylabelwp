@@ -34,4 +34,6 @@ function run_anylabelwp() {
 
 run_anylabelwp();
 
+register_uninstall_hook(__FILE__, 'anylabelwp_uninstall');
+
 ?>
