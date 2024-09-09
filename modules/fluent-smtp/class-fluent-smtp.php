@@ -18,7 +18,7 @@ class AnylabelWP_Fluent_SMTP {
     public function enqueue_scripts() {
         if ( isset( $_GET['page'] ) && $_GET['page'] == 'fluent-mail' ) {
             wp_enqueue_style( 'anylabelwp-fluent-smtp-style', ANYLABELWP_PLUGIN_URL . 'modules/fluent-smtp/css/fluent-smtp.css', array(), ANYLABELWP_VERSION );
-            wp_enqueue_script( 'anylabelwp-fluent-smtp-script', ANYLABELWP_PLUGIN_URL . 'modules/fluent-smtp/js/fluent-smtp.js', array( 'jquery' ), ANYLABELWP_VERSION, true );
+            wp_enqueue_script( 'anylabelwp-fluent-smtp-script', ANYLABELWP_PLUGIN_URL . 'modules/fluent-smtp/js/fluent-smtp.js', array(), ANYLABELWP_VERSION, true );
             wp_localize_script( 'anylabelwp-fluent-smtp-script', 'anylabelwp', array(
                 'new_url' => esc_url( get_option( 'anylabelwp_fluent_smtp_logo_url' ) ),
             ) );
