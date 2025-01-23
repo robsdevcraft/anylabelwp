@@ -5,7 +5,7 @@
         settings_fields( 'anylabelwp_settings' );
         do_settings_sections( 'anylabelwp_settings' );
         ?>
-        <h2>General Settings</h2>
+        <h2>AnylabelWP Settings</h2>
         <!-- Add any general plugin settings here -->
 
         <?php do_action( 'anylabelwp_render_module_settings' ); ?>
