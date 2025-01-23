@@ -48,9 +48,3 @@
         <?php submit_button( 'Save Changes' ); ?>
     </form>
 </div>
-
-<style>
-.tab-content {
-    margin-top: 20px;
-}
-</style>
