@@ -19,8 +19,16 @@ class AnylabelWP_Fluent_Forms {
         // Enqueue scripts and styles for Fluent Forms
     }
 
+    // Changes the name from Fluent Forms to Forms and adds new generic dashicon
     public function change_fluent_forms_menu_name() {
-        // Change menu name logic
+        global $menu;
+        foreach ($menu as $key => $item) {
+            if ($item[0] === 'Fluent Forms') {
+                $menu[$key][0] = esc_html__('Forms', 'anylabelwp-plugin');
+                $menu[$key][6] = 'dashicons-text-page';
+                break;
+            }
+        }
     }
 
     public function register_settings() {
