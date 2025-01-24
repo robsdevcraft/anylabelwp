@@ -44,5 +44,7 @@ p#footer-upgrade.alignright {
     display: none;
 }
 
-
-/* You can add more general admin styles here */
+/* Remove Screen Options and Help dropdowns on dashboard */
+div#screen-meta-links {
+    display: none;
+}
