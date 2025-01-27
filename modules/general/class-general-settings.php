@@ -21,7 +21,7 @@ class AnylabelWP_General_Settings
     public function register_settings()
     {
         register_setting(
-            'anylabelwp_settings',
+            'anylabelwp_general',
             'anylabelwp_allowed_roles',
             [
                 'type'              => 'array',

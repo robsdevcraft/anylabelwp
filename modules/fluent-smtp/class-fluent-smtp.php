@@ -87,7 +87,7 @@ class AnylabelWP_Fluent_SMTP
         }
 
         register_setting(
-            'anylabelwp_settings',
+            'anylabelwp_smtp',
             'anylabelwp_fluent_smtp_logo_url',
             [
                 'sanitize_callback' => 'esc_url_raw',

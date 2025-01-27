@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
     <?php
-    // Basic permission check
+    // Basic capability check
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have sufficient permissions to access this page.', 'anylabelwp-plugin'));
     }
@@ -38,19 +38,32 @@ if (!defined('ABSPATH')) {
     </h2>
 
     <form action="<?php echo esc_url(admin_url('options.php')); ?>" method="post">
-        <?php wp_nonce_field('anylabelwp_settings', 'anylabelwp_settings_nonce'); ?>
-        <?php settings_fields('anylabelwp_settings'); ?>
-        <?php do_settings_sections('anylabelwp_settings'); ?>
+        <?php
+        /**
+         * For each tab, call settings_fields() and do_settings_sections() 
+         * on the matching group. This prevents overlap between tabs.
+         */
+        if ($current_tab === 'general') {
+            settings_fields('anylabelwp_general');
+            do_settings_sections('anylabelwp_general');
+        } elseif ($current_tab === 'smtp') {
+            settings_fields('anylabelwp_smtp');
+            do_settings_sections('anylabelwp_smtp');
+        } elseif ($current_tab === 'forms') {
+            settings_fields('anylabelwp_forms');
+            do_settings_sections('anylabelwp_forms');
+        }
+        ?>
 
         <?php
-        // Extra nonce check for the sub-settings
-        if (isset($_POST['anylabelwp_settings_nonce']) && !wp_verify_nonce($_POST['anylabelwp_settings_nonce'], 'anylabelwp_settings')) {
+        // Extra nonce check
+        if (isset($_POST['anylabelwp_settings_nonce'])
+            && !wp_verify_nonce($_POST['anylabelwp_settings_nonce'], 'anylabelwp_settings')) {
             wp_die(__('Security check failed.', 'anylabelwp-plugin'));
         }
 
         /**
-         * We use $current_tab to decide which module’s settings to show
-         * Modules hook into do_action() for their respective tab or section
+         * Fire actions for each tab to render UI
          */
         if ($current_tab === 'general') {
             do_action('anylabelwp_render_general_settings');
@@ -59,7 +72,7 @@ if (!defined('ABSPATH')) {
         } elseif ($current_tab === 'forms') {
             do_action('anylabelwp_render_forms_settings');
         } else {
-            // CRM is largely ignored here as per instructions
+            // CRM placeholder
             echo '<div class="tab-content crm-settings">';
             echo '<p>' . esc_html__('Fluent CRM settings go here', 'anylabelwp-plugin') . '</p>';
             echo '</div>';
