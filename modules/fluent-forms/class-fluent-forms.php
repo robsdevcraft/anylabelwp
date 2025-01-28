@@ -35,7 +35,7 @@ class AnylabelWP_Fluent_Forms
     public function enqueue_scripts()
     {
         // Change 'fluent_forms' to the actual page slug used by Fluent Forms
-        if (isset($_GET['page']) && $_GET['page'] === 'fluent_forms') {
+        if (isset($_GET['page']) && strpos($_GET['page'], 'fluent_forms') !== false) {
             wp_enqueue_style(
                 'anylabelwp-fluent-forms-style',
                 ANYLABELWP_PLUGIN_URL . 'modules/fluent-forms/css/fluent-forms.css',
