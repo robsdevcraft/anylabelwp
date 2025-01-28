@@ -34,7 +34,30 @@ class AnylabelWP_Fluent_Forms
      */
     public function enqueue_scripts()
     {
-        // Add any needed scripts/styles for the Fluent Forms pages
+        // Change 'fluent_forms' to the actual page slug used by Fluent Forms
+        if (isset($_GET['page']) && $_GET['page'] === 'fluent_forms') {
+            wp_enqueue_style(
+                'anylabelwp-fluent-forms-style',
+                ANYLABELWP_PLUGIN_URL . 'modules/fluent-forms/css/fluent-forms.css',
+                [],
+                ANYLABELWP_VERSION
+            );
+            wp_enqueue_script(
+                'anylabelwp-fluent-forms-script',
+                ANYLABELWP_PLUGIN_URL . 'modules/fluent-forms/js/fluent-forms.js',
+                [],
+                ANYLABELWP_VERSION,
+                true
+            );
+
+            wp_localize_script(
+                'anylabelwp-fluent-forms-script',
+                'anylabelwp',
+                [
+                    'new_url' => esc_url(get_option('anylabelwp_fluent_forms_logo_url')),
+                ]
+            );
+        }
     }
 
     /**
@@ -53,11 +76,39 @@ class AnylabelWP_Fluent_Forms
     }
 
     /**
-     * Register settings for Fluent Forms if necessary
+     * Register settings for Fluent Forms
      */
     public function register_settings()
     {
-        // Register any relevant options here
+        if (isset($_POST['anylabelwp_fluent_forms_nonce']) &&
+            wp_verify_nonce($_POST['anylabelwp_fluent_forms_nonce'], 'anylabelwp_fluent_forms_settings')
+        ) {
+            // Process any posted settings if needed
+        }
+
+        register_setting(
+            'anylabelwp_forms',
+            'anylabelwp_fluent_forms_logo_url',
+            [
+                'sanitize_callback' => 'esc_url_raw',
+                'default'           => '',
+                'validate_callback' => [$this, 'validate_logo_url'],
+            ]
+        );
+    }
+
+    /**
+     * Validate logo URL setting
+     *
+     * @param string $url
+     * @return bool
+     */
+    public function validate_logo_url($url)
+    {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -68,10 +119,20 @@ class AnylabelWP_Fluent_Forms
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.', 'anylabelwp-plugin'));
         }
+
+        wp_nonce_field('anylabelwp_fluent_forms_settings', 'anylabelwp_fluent_forms_nonce');
         ?>
         <div class="tab-content forms-settings">
-            <h2><?php echo esc_html__('Fluent Forms Settings', 'anylabelwp-plugin'); ?></h2>
-            <p><?php echo esc_html__('Fluent Forms settings go here.', 'anylabelwp-plugin'); ?></p>
+            <h2><?php esc_html_e('Fluent Forms Settings', 'anylabelwp-plugin'); ?></h2>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Custom Fluent Forms Logo URL', 'anylabelwp-plugin'); ?></th>
+                    <td>
+                        <input type="text" name="anylabelwp_fluent_forms_logo_url"
+                            value="<?php echo esc_attr(get_option('anylabelwp_fluent_forms_logo_url')); ?>" />
+                    </td>
+                </tr>
+            </table>
         </div>
         <?php
     }

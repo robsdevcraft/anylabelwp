@@ -1,0 +1,25 @@
+/*  
+    Fluent Forms CSS
+*/
+
+/* Wrapper properties for new Fluent SMTP logo */
+/* body.settings-page-fluent-mail .logo {
+    width: 100px;  
+    height: 100px;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* Hide the logo initially, then apply properties to new image */
+span.plugin_name img {
+    /* max-width: 100%;
+    max-height: 100%;
+    margin-top: -3em; */
+    display: none;  
+}
+
+/* Hide the Fluent Forms link at footer of plugin pages */
+#footer-left {
+    display: none;
+}
