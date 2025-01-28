@@ -48,3 +48,17 @@ p#footer-upgrade.alignright {
 div#screen-meta-links {
     display: none;
 }
+
+/* Hide SMTP and Support links by default */
+#toplevel_page_fluent_forms .wp-submenu li:nth-child(7),
+#toplevel_page_fluent_forms .wp-submenu li:nth-child(9) {
+    display: none !important;
+}
+
+/* Keep them hidden on hover/focus states */
+#toplevel_page_fluent_forms:hover .wp-submenu li:nth-child(7),
+#toplevel_page_fluent_forms:hover .wp-submenu li:nth-child(9),
+#toplevel_page_fluent_forms a:focus ~ .wp-submenu li:nth-child(7),
+#toplevel_page_fluent_forms a:focus ~ .wp-submenu li:nth-child(9) {
+    display: none !important;
+}

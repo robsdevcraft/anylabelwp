@@ -1,1 +1,1 @@
-console.log("Fluent Forms JS file loaded")
+console.log("Fluent Forms JS file loaded");
