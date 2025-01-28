@@ -19,8 +19,14 @@
     display: none;  
 }
 
-/* Hide the default Alerts, About, and Documentation page links */
+/* Hide the default Support, SMTP, and Pro Updgrade button links */
 .ff_menu li:nth-last-child(-n+3) {
+    display: none;
+}
+
+/* Hide the default Support, SMTP links from sidebar menu */
+#toplevel_page_fluent_forms ul li:nth-child(7),
+#toplevel_page_fluent_forms ul li:nth-child(9) {
     display: none;
 }
 
