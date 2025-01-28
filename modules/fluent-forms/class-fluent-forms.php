@@ -71,7 +71,7 @@ class AnylabelWP_Fluent_Forms
         ?>
         <div class="tab-content forms-settings">
             <h2><?php echo esc_html__('Fluent Forms Settings', 'anylabelwp-plugin'); ?></h2>
-            <p><?php echo esc_html__('Fluent Forms specific settings or options can go here.', 'anylabelwp-plugin'); ?></p>
+            <p><?php echo esc_html__('Fluent Forms settings go here.', 'anylabelwp-plugin'); ?></p>
         </div>
         <?php
     }

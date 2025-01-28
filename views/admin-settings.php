@@ -74,6 +74,7 @@ if (!defined('ABSPATH')) {
         } else {
             // CRM placeholder
             echo '<div class="tab-content crm-settings">';
+            echo '<h2>' . esc_html__('Fluent Forms Settings', 'anylabelwp-plugin') . '</h2>';
             echo '<p>' . esc_html__('Fluent CRM settings go here', 'anylabelwp-plugin') . '</p>';
             echo '</div>';
         }

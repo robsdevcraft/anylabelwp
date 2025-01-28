@@ -126,7 +126,7 @@ class AnylabelWP_Fluent_SMTP
             <h2><?php esc_html_e('Fluent SMTP Settings', 'anylabelwp-plugin'); ?></h2>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Fluent SMTP Logo URL', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom Fluent SMTP Logo URL', 'anylabelwp-plugin'); ?></th>
                     <td>
                         <input type="text" name="anylabelwp_fluent_smtp_logo_url" value="<?php echo esc_attr(get_option('anylabelwp_fluent_smtp_logo_url')); ?>" />
                     </td>
