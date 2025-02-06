@@ -10,7 +10,7 @@ class AnylabelWP_Fluent_Forms
     public function __construct()
     {
         if ($this->is_fluent_forms_active()) {
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+            add_action('admin_head', [$this, 'enqueue_scripts'], 999);
             add_action('admin_menu', [$this, 'change_fluent_forms_menu_name'], 999);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('anylabelwp_render_forms_settings', [$this, 'render_settings']);
@@ -34,8 +34,12 @@ class AnylabelWP_Fluent_Forms
      */
     public function enqueue_scripts()
     {
+        //Debug page
+        //error_log('Current $_GET["page"] value: ' . (isset($_GET['page']) ? $_GET['page'] : 'Not set'));
+
         // Change 'fluent_forms' to the actual page slug used by Fluent Forms
-        if (isset($_GET['page']) && strpos($_GET['page'], 'fluent_forms') !== false) {
+        if ((isset($_GET['page']) && strpos($_GET['page'], 'fluent_forms') !== false)) {
+        
             wp_enqueue_style(
                 'anylabelwp-fluent-forms-style',
                 ANYLABELWP_PLUGIN_URL . 'modules/fluent-forms/css/fluent-forms.css',
@@ -47,7 +51,7 @@ class AnylabelWP_Fluent_Forms
                 ANYLABELWP_PLUGIN_URL . 'modules/fluent-forms/js/fluent-forms.js',
                 [],
                 ANYLABELWP_VERSION,
-                true
+                false // false so that it loads in header
             );
 
             wp_localize_script(
