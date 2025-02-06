@@ -2,21 +2,17 @@
     Fluent Forms CSS
 */
 
-/* Wrapper properties for new Fluent SMTP logo */
-/* body.settings-page-fluent-mail .logo {
-    width: 100px;  
-    height: 100px;  
+/* Wrapper properties for new Fluent Forms logo */
+.ff_header_group {
     display: flex;
     justify-content: center;
     align-items: center;
-} */
+    overflow: hidden; /* Prevent content from overflowing if the image is larger */
+}
 
 /* Hide the logo initially, then apply properties to new image */
 .ff_header_group img {
-    /* max-width: 100%;
-    max-height: 100%;
-    margin-top: -3em; */
-    display: none;  
+    display: none;  /* Hide the logo by default */
 }
 
 /* Hide the default Support, SMTP, and Pro Updgrade button links */
