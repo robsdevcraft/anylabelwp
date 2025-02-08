@@ -1,21 +1,21 @@
 /*  
-    Fluent SMTP CSS
+    AnylabelWP Custom Fluent SMTP CSS
 */
 
 /* Wrapper properties for new Fluent SMTP logo */
-body.settings_page_fluent-mail .logo {
+/* body.settings_page_fluent-mail .logo {
     width: 100px;  
     height: 100px;  
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 /* Hide the logo initially, then apply properties to new image */
 body.settings_page_fluent-mail .logo img {
-    max-width: 100%;
-    max-height: 100%;
-    margin-top: -3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     display: none;  
 }
 

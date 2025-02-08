@@ -1,18 +1,18 @@
 /*  
-    Fluent Forms CSS
+    AnylabelWP Custom Fluent Forms CSS
 */
 
 /* Wrapper properties for new Fluent Forms logo */
-.ff_header_group {
+/* .ff_header_group {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevent content from overflowing if the image is larger */
-}
+    overflow: hidden;
+} */
 
-/* Hide the logo initially, then apply properties to new image */
-.ff_header_group img {
-    display: none;  /* Hide the logo by default */
+/* Hide the original logo initially */
+.ff_header .plugin-name img {
+    display: none; 
 }
 
 /* Hide the default Support, SMTP, and Pro Updgrade button links */
@@ -20,13 +20,7 @@
     display: none;
 }
 
-/* Hide the default Support, SMTP links from sidebar menu */
-#toplevel_page_fluent_forms ul li:nth-child(7),
-#toplevel_page_fluent_forms ul li:nth-child(9) {
-    display: none;
-}
-
-/* Hide the Fluent Forms link at footer of plugin pages */
+/* Hide the Fluent Forms link at footer of plugin settings */
 #footer-left {
     display: none;
 }
