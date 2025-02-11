@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
         newImage.onload = function() {
             // Once the new image has finished loading, update the src of the logo image
             logoImage.src = newImageUrl;
-            // Show the logo image
-            logoImage.style.display = 'block';
+            // Style using object properties to overide default css from fluent smtp
+            Object.assign(logoImage.style, {
+                display: 'block',
+                width: 'auto',       
+
+            });
         };
 
         newImage.onerror = function() {

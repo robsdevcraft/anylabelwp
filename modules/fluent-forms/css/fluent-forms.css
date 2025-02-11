@@ -2,17 +2,10 @@
     AnylabelWP Custom Fluent Forms CSS
 */
 
-/* Wrapper properties for new Fluent Forms logo */
-/* .ff_header_group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-} */
-
 /* Hide the original logo initially */
 .ff_header .plugin-name img {
-    display: none; 
+    display: none;
+    height: auto; 
 }
 
 /* Hide the default Support, SMTP, and Pro Updgrade button links */
