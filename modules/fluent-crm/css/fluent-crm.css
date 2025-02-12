@@ -1,3 +1,8 @@
 /*  
     AnylabelWP Custom Fluent CRM CSS
 */
+
+/* Hide the link at footer of plugin settings */
+#footer-left {
+    display: none;
+}

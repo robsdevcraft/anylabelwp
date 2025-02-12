@@ -27,6 +27,7 @@ class Loader
         $modules = [
             'fluent-smtp'  => 'Fluent_SMTP',
             'fluent-forms' => 'Fluent_Forms',
+            'fluent-crm' => 'Fluent_CRM',
             // Add other modules here
         ];
 

@@ -71,12 +71,10 @@ if (!defined('ABSPATH')) {
             do_action('anylabelwp_render_smtp_settings');
         } elseif ($current_tab === 'forms') {
             do_action('anylabelwp_render_forms_settings');
+        } elseif ($current_tab === 'crm') {
+            do_action('anylabelwp_render_crm_settings');
         } else {
-            // CRM placeholder
-            echo '<div class="tab-content crm-settings">';
-            echo '<h2>' . esc_html__('Fluent Forms Settings', 'anylabelwp-plugin') . '</h2>';
-            echo '<p>' . esc_html__('Fluent CRM settings go here', 'anylabelwp-plugin') . '</p>';
-            echo '</div>';
+            echo '<p>' . esc_html__('Additional settings go here', 'anylabelwp-plugin') . '</p>';        
         }
         ?>
 
