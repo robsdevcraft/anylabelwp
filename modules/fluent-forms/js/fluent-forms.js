@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Fluent Forms JS file loaded");
-
     const newImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
     const logoImage = document.querySelector('.ff_header .plugin-name img');  // Target the img tag
 

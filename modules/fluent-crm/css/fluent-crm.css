@@ -2,6 +2,10 @@
     AnylabelWP Custom Fluent CRM CSS
 */
 
+.fluentcrm_menu_logo_holder img {
+    display: none;
+}
+
 /* Hide the link at footer of plugin settings */
 #footer-left {
     display: none;
