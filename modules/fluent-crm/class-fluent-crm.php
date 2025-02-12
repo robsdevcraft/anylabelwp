@@ -67,7 +67,7 @@ class AnylabelWP_Fluent_CRM
     {
         global $menu;
         foreach ($menu as $key => $item) {
-            if ($item[0] === 'Fluent CRM') {
+            if ($item[0] === 'FluentCRM') {
                 $menu[$key][0] = esc_html__('CRM', 'anylabelwp-plugin');
                 $menu[$key][6] = 'dashicons-groups';
                 break;
