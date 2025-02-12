@@ -52,6 +52,9 @@ if (!defined('ABSPATH')) {
         } elseif ($current_tab === 'forms') {
             settings_fields('anylabelwp_forms');
             do_settings_sections('anylabelwp_forms');
+        } elseif ($current_tab === 'crm') {
+            settings_fields('anylabelwp_crm');
+            do_settings_sections('anylabelwp_crm');
         }
         ?>
 
@@ -73,8 +76,6 @@ if (!defined('ABSPATH')) {
             do_action('anylabelwp_render_forms_settings');
         } elseif ($current_tab === 'crm') {
             do_action('anylabelwp_render_crm_settings');
-        } else {
-            echo '<p>' . esc_html__('Additional settings go here', 'anylabelwp-plugin') . '</p>';        
         }
         ?>
 
