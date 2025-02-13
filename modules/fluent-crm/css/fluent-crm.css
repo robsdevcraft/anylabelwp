@@ -6,6 +6,11 @@
     display: none;
 }
 
+/* Hide the default Pro Updgrade button link */
+ul.fluentcrm_menu li:last-child {
+    display: none;
+}
+
 /* Hide the link at footer of plugin settings */
 #footer-left {
     display: none;
