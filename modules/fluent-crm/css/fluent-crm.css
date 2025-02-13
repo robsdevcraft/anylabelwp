@@ -6,6 +6,11 @@
     display: none;
 }
 
+/* Hide the default Reports button link */
+ul.fluentcrm_menu li.fluentcrm_item_reports {
+    display: none;
+}
+
 /* Hide the default Pro Updgrade button link */
 ul.fluentcrm_menu li:last-child {
     display: none;
@@ -17,12 +22,17 @@ ul.fluentcrm_menu a[href*="/email/sequences"] {
     display: none;
 }
 
-/* Hide the default Dynamic Sequences links in deafult header Contact submenu */
+/* Hide the default Dynamic Sequences link in deafult header Contact submenu */
 li.fluentcrm_menu_item.fluentcrm_has_sub_items.fluentcrm_item_contacts.fluentcrm_active .fluentcrm_submenu_items a[href*="/contact-groups/dynamic-segments"] {
     display: none;
 }
 
-/* Hide the dynamic submenu heasder link*/
+/* Hide the default Dynamic Sequences link in Contacts subpage dropdown menu */
+ul.el-dropdown-menu li:nth-child(4) {
+    display: none;
+}
+
+/* Hide the dynamic submenu header link*/
 ul.fc_segment_menu li.fc_item_dynamic_segments {
     display: none;
 }
