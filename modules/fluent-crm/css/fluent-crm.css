@@ -11,6 +11,12 @@ ul.fluentcrm_menu li:last-child {
     display: none;
 }
 
+/* Hide the default Campaigns and Sequences links */
+ul.fluentcrm_menu a[href*="/email/campaigns"],
+ul.fluentcrm_menu a[href*="/email/sequences"] {
+    display: none;
+}
+
 /* Hide the link at footer of plugin settings */
 #footer-left {
     display: none;
