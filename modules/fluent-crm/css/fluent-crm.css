@@ -11,9 +11,19 @@ ul.fluentcrm_menu li:last-child {
     display: none;
 }
 
-/* Hide the default Campaigns and Sequences links */
+/* Hide the default Campaigns and Sequences links in default header Campaigns submenu */
 ul.fluentcrm_menu a[href*="/email/campaigns"],
 ul.fluentcrm_menu a[href*="/email/sequences"] {
+    display: none;
+}
+
+/* Hide the default Dynamic Sequences links in deafult header Contact submenu */
+li.fluentcrm_menu_item.fluentcrm_has_sub_items.fluentcrm_item_contacts.fluentcrm_active .fluentcrm_submenu_items a[href*="/contact-groups/dynamic-segments"] {
+    display: none;
+}
+
+/* Hide the dynamic submenu heasder link*/
+ul.fc_segment_menu li.fc_item_dynamic_segments {
     display: none;
 }
 
