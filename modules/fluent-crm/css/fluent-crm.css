@@ -17,7 +17,7 @@ ul.fluentcrm_menu li:last-child {
     display: none;
 }
 
-div.fc_inline_doc {
+.fc_inline_doc {
     display: none;
 }
 
@@ -42,7 +42,7 @@ ul.fc_segment_menu li.fc_item_dynamic_segments {
     display: none;
 }
 
-.el-col.el-col-24.el-col-sm-24.el-col-md-8.el-col-lg-6 > div:nth-last-child(-n+2) {
+.el-col.el-col-24.el-col-sm-24.el-col-md-8.el-col-lg-6 > div:nth-last-child(-n+3) {
     display: none;
 }
 
