@@ -2,17 +2,22 @@
     AnylabelWP Custom Fluent CRM CSS
 */
 
+/* Hide the default logo on page load until the JS fires*/
 .fluentcrm_menu_logo_holder img {
     display: none;
 }
 
-/* Hide the default Reports button link */
+/* Hide the default Reports button link on main header */
 ul.fluentcrm_menu li.fluentcrm_item_reports {
     display: none;
 }
 
-/* Hide the default Pro Updgrade button link */
+/* Hide the default Pro Updgrade button link on main header*/
 ul.fluentcrm_menu li:last-child {
+    display: none;
+}
+
+div.fc_inline_doc {
     display: none;
 }
 
@@ -34,6 +39,10 @@ ul.el-dropdown-menu li:nth-child(4) {
 
 /* Hide the dynamic submenu header link*/
 ul.fc_segment_menu li.fc_item_dynamic_segments {
+    display: none;
+}
+
+.el-col.el-col-24.el-col-sm-24.el-col-md-8.el-col-lg-6 > div:nth-last-child(-n+2) {
     display: none;
 }
 
