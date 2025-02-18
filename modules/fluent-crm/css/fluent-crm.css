@@ -42,8 +42,14 @@ ul.fc_segment_menu li.fc_item_dynamic_segments {
     display: none;
 }
 
+/* Hide dashboard widgets */ 
 .el-col.el-col-24.el-col-sm-24.el-col-md-8.el-col-lg-6 > div:nth-last-child(-n+3) {
     display: none;
+}
+
+/* Hide the Smart Links link in Settings submenu*/
+.el-col.el-col-5 ul.el-menu li:nth-child(5) {
+    display: none !important;
 }
 
 /* Hide the link at footer of plugin settings */
