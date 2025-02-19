@@ -28,6 +28,7 @@ class Loader
             'fluent-smtp'  => 'Fluent_SMTP',
             'fluent-forms' => 'Fluent_Forms',
             'fluent-crm' => 'Fluent_CRM',
+            'wp-social-ninja' => 'WP_Social_Ninja'
             // Add other modules here
         ];
 

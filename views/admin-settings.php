@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 
     <h2 class="nav-tab-wrapper">
         <?php
-        $allowed_tabs = ['general', 'smtp', 'forms', 'crm'];
+        $allowed_tabs = ['general', 'smtp', 'forms', 'crm', 'socials'];
         $current_tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'general';
         $current_tab = in_array($current_tab, $allowed_tabs, true) ? $current_tab : 'general';
         ?>
@@ -34,6 +34,10 @@ if (!defined('ABSPATH')) {
         <a href="<?php echo esc_url(add_query_arg(['page' => 'anylabelwp-settings', 'tab' => 'crm'])); ?>"
            class="nav-tab <?php echo $current_tab === 'crm' ? 'nav-tab-active' : ''; ?>">
             <?php echo esc_html__('Fluent CRM', 'anylabelwp-plugin'); ?>
+        </a>
+        <a href="<?php echo esc_url(add_query_arg(['page' => 'anylabelwp-settings', 'tab' => 'socials'])); ?>"
+           class="nav-tab <?php echo $current_tab === 'crm' ? 'nav-tab-active' : ''; ?>">
+            <?php echo esc_html__('WP Social Ninja', 'anylabelwp-plugin'); ?>
         </a>
     </h2>
 
@@ -55,7 +59,10 @@ if (!defined('ABSPATH')) {
         } elseif ($current_tab === 'crm') {
             settings_fields('anylabelwp_crm');
             do_settings_sections('anylabelwp_crm');
-        }
+        } elseif ($current_tab === 'socials') {
+            settings_fields('anylabelwp_social_media');
+            do_settings_sections('anylabelwp_social_media');
+        } 
         ?>
 
         <?php
@@ -76,6 +83,8 @@ if (!defined('ABSPATH')) {
             do_action('anylabelwp_render_forms_settings');
         } elseif ($current_tab === 'crm') {
             do_action('anylabelwp_render_crm_settings');
+        } elseif ($current_tab === 'socials') {
+            do_action('anylabelwp_render_wp_social_ninja_settings');
         }
         ?>
 

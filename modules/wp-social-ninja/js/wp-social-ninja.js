@@ -1,1 +1,1 @@
-console.log("WP manage Ninja JS file has loaded")
+console.log("WP Social Ninja JS file has loaded")
