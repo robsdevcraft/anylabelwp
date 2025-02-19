@@ -34,7 +34,7 @@ class AnylabelWP_WP_Social_Ninja
      */
     public function enqueue_scripts()
     {
-        if (isset($_GET['page']) && $_GET['page'] === 'wpsocialninja') {
+        if (isset($_GET['page']) && $_GET['page'] === 'wpsocialninja.php') {
         
             wp_enqueue_style(
                 'anylabelwp-wp-social-ninja-style',
