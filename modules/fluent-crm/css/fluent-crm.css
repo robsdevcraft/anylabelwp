@@ -28,8 +28,8 @@ ul.fluentcrm_menu a[href*="/email/sequences"] {
 }
 
 /* Hide the default Dynamic Sequences link in deafult header Contact submenu */
-li.fluentcrm_menu_item.fluentcrm_has_sub_items.fluentcrm_item_contacts.fluentcrm_active .fluentcrm_submenu_items a[href*="/contact-groups/dynamic-segments"] {
-    display: none;
+.fluentcrm_menu_item.fluentcrm_item_contacts .fluentcrm_submenu_items a[href*="/contact-groups/dynamic-segments"] {
+    display: none !important;
 }
 
 /* Hide the default Dynamic Sequences link in Contacts subpage dropdown menu */
