@@ -17,7 +17,8 @@ ul.fluentcrm_menu li:last-child {
     display: none;
 }
 
-.fc_inline_doc {
+/* Hide the knowledge base icon */
+span.dashicons.dashicons-welcome-learn-more {
     display: none;
 }
 
