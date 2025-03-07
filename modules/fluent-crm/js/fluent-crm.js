@@ -27,3 +27,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+(function() {
+    // Function to hide menu items based on text content
+    function hideMenuItems() {
+        // Target dropdown items with specific text
+        document.querySelectorAll('.el-dropdown-menu__item').forEach(item => {
+            const text = item.textContent.trim();
+            if (text === 'Recurring Email Campaigns' || 
+                text === 'Email Sequences' || 
+                text === 'Dynamic Segments' ||
+                text === 'Smart Links') {
+                item.style.display = 'none';
+            }
+        });
+        
+        // Target settings menu items
+        document.querySelectorAll('.el-menu .el-menu-item').forEach(item => {
+            if (item.textContent.includes('Smart Links')) {
+                item.style.display = 'none';
+            }
+        });
+    }
+    
+    // Run immediately and on DOM changes
+    function initObserver() {
+        hideMenuItems();
+        
+        // Watch for DOM changes
+        const observer = new MutationObserver(function(mutations) {
+            hideMenuItems();
+        });
+        
+        // Start observing
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+    
+    // Run when DOM is ready or when page has loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initObserver);
+    } else {
+        initObserver();
+    }
+})();
