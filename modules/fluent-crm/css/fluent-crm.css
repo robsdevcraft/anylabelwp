@@ -44,7 +44,8 @@ ul.fc_segment_menu li.fc_item_dynamic_segments {
 }
 
 /* Hide the Smart Links link in Settings submenu*/
-.el-col.el-col-5 ul.el-menu li:nth-child(5) {
+.el-col.el-col-5 ul.el-menu li:nth-child(5),
+.el-col.el-col-5 ul.el-menu li:nth-child(10) {
     display: none !important;
 }
 
