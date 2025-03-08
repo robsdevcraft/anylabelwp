@@ -1,3 +1,4 @@
+// Replace Fluent CRM Logo with new logo saved from class-fluent-crm.php in wp-options
 document.addEventListener('DOMContentLoaded', function() {
     const newImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
     const logoImage = document.querySelector('.fluentcrm_menu_logo_holder img');  // Target the img tag
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Hide the Pro links in "Contacts" and "Emails" subpage dropdowns
 (function() {
     // Function to hide menu items based on text content
     function hideMenuItems() {
@@ -73,3 +75,57 @@ document.addEventListener('DOMContentLoaded', function() {
         initObserver();
     }
 })();
+
+// Text replacement function on Settings page for General Settings
+function replaceTextInElements() {
+    // Get all text nodes in the document
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+    
+    const textReplacements = [
+        { from: "Fluent CRM", to: "CRM" },
+        { from: "FluentCRM", to: "CRM" },
+        { from: "WP User", to: "User" },
+    ];
+    
+    let node;
+    while (node = walker.nextNode()) {
+        if (node.nodeValue.trim() !== '') {
+            let newText = node.nodeValue;
+            textReplacements.forEach(replacement => {
+                newText = newText.replace(new RegExp(replacement.from, 'g'), replacement.to);
+            });
+            
+            if (newText !== node.nodeValue) {
+                node.nodeValue = newText;
+            }
+        }
+    }
+}
+
+// Run on page load and when DOM changes
+function initTextReplacements() {
+    replaceTextInElements();
+    
+    // Watch for DOM changes
+    const observer = new MutationObserver(function(mutations) {
+        replaceTextInElements();
+    });
+    
+    // Start observing
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+// Run when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTextReplacements);
+} else {
+    initTextReplacements();
+}
