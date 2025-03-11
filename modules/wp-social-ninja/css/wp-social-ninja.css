@@ -2,13 +2,12 @@
     AnylabelWP Custom WP Social Ninja CSS
 */
 
-/* Hide the link at footer of plugin pages */
-#footer-left {
-    display: none;
-}
+/* Global Modifications */
 
-/* Hide Support link */
-a[href="#/support"] {
+/* Hide Support, Testimonials, Notifications links */
+a[href="#/support"],
+a[href="#/testimonials"],
+a[href="#/notifications"] {
     display: none !important;
 }
 
@@ -16,4 +15,9 @@ a[href="#/support"] {
 a.wpsr_buy_pro_btn_primary, 
 a.wpsr_buy_pro_tab {
     display: none !important;
+}
+
+/* Hide the link at footer of plugin pages */
+#footer-left {
+    display: none;
 }
