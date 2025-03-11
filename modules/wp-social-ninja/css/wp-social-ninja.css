@@ -6,3 +6,14 @@
 #footer-left {
     display: none;
 }
+
+/* Hide Support link */
+a[href="#/support"] {
+    display: none !important;
+}
+
+/* Hide Upgrade to Pro button */
+a.wpsr_buy_pro_btn_primary, 
+a.wpsr_buy_pro_tab {
+    display: none !important;
+}
