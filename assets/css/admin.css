@@ -51,7 +51,7 @@ div#screen-meta-links {
 
 /*
     AnylabelWP Fluent Forms Global Styles
- */
+*/
 
 /* Hide SMTP and Support links on submenu*/
 #toplevel_page_fluent_forms .wp-submenu li:nth-child(7),
@@ -69,7 +69,7 @@ div#screen-meta-links {
 
 /*
     AnylabelWP Fluent CRM Global Styles
- */
+*/
 
 #toplevel_page_fluentcrm-admin .wp-submenu li:nth-child(7), /* Recurring Campaigns */
 #toplevel_page_fluentcrm-admin .wp-submenu li:nth-child(8), /* Email Sequences */
@@ -84,5 +84,18 @@ div#screen-meta-links {
 #toplevel_page_fluentcrm-admin:hover .wp-submenu li:nth-child(13), /* Reports */
 #toplevel_page_fluentcrm-admin:hover .wp-submenu li:nth-child(14), /* Addons */
 #toplevel_page_fluentcrm-admin:hover .wp-submenu li:nth-child(15)  /* Help */ {
+    display: none !important;
+}
+
+
+/*
+    AnylabelWP WP Social Ninja Global Styles
+*/
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="#/testimonials"],
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="#/notifications"],
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="wpsocialninja.com"],
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="#/tools"],
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="#/tiktok_feed"],
+#toplevel_page_wpsocialninja .wp-submenu li a[href*="#/support"] {
     display: none !important;
 }
