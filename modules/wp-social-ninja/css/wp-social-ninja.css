@@ -7,7 +7,8 @@
 /* Hide Support, Testimonials, Notifications links */
 a[href="#/support"],
 a[href="#/testimonials"],
-a[href="#/notifications"] {
+a[href="#/notifications"],
+a[href="#/tiktok_feed"] {
     display: none !important;
 }
 
