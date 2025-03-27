@@ -1,3 +1,31 @@
-# AnylabelWP Plugin
+# AnylabelWP WordPress Plugin
 
-A free, MIT licensed open-source plugin to customize the appearance of 3rd-Party PLugins for a more unified user experience.
+A free, GPL licensed, open-source plugin to customize the appearance of 3rd-Party Plugins for a more unified and product agnostic user experience.
+
+# Current plugins with modifications 
+
+- Fluent Forms (Free version)
+- Fluent CRM (Free version)
+- WP Social Ninja (Free Version)
+- Fluent SMTP
+
+# Feature Highlights
+
+- Replace branded logos with generic icons and naming conventions (Forms, CRM, Socials, SMTP)
+- Remove pro versions of plugin upgrade and menu links
+- Separate CSS and Javascript files enqueued for each plugin in WordPress admin pages
+- Removes WordPress logo in admin bar
+- Removes WordPress version number
+- Removes WordPress admin Dashboard widgets
+
+# Who should use this plugin
+
+- Website as a Service (WAAS) offerings
+- Agencies
+- Freelancers
+
+## Licensing
+
+WP-Autoplugin is licensed under the GPLv3 or later.
+
+## Changelog
