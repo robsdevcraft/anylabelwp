@@ -26,6 +26,6 @@ A free, GPL licensed, open-source plugin to customize the appearance of 3rd-Part
 
 ## Licensing
 
-WP-Autoplugin is licensed under the GPLv3 or later.
+AnylabelWP is licensed under the GPLv3 or later.
 
 ## Changelog
