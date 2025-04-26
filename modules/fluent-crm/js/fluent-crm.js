@@ -90,6 +90,7 @@ function replaceTextInElements() {
         { from: "Fluent CRM", to: "CRM" },
         { from: "FluentCRM", to: "CRM" },
         { from: "WP User", to: "User" },
+        { from: "WordPress", to: "" },
     ];
     
     let node;
