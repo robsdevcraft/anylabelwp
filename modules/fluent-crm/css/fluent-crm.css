@@ -56,3 +56,14 @@ ul.fc_segment_menu li.fc_item_dynamic_segments {
 #footer-left {
     display: none;
 }
+
+/* Hide Import Export buttons on Contacts page */
+.el-button-group button:has(.el-icon-upload),
+.el-button-group button:has(.el-icon-download) {
+    display: none !important;
+}
+
+/* Hide the Import button (with upload icon) */
+.el-button--info.el-button--small:has(.el-icon-upload) {
+    display: none !important;
+}
