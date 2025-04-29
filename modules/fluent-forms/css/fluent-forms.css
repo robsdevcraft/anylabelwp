@@ -40,3 +40,18 @@
     background-color: #000000;
     color: #FFFFFF;
 }
+
+/* Change a link color */ 
+a {
+    color: #000000;
+}
+
+/* Remove Review Notifications */
+#ff_notice_review_query {
+    display: none;
+}
+
+/* Remove NEW span on payments */
+.ff_new_badge {
+    display: none;
+}
