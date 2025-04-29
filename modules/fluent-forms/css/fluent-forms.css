@@ -18,6 +18,7 @@
     display: none;
 }
 
+/* Change the default color of Button element*/
 .el-button--primary {
     background-color: #000000;
     border-color: #000000;
@@ -27,4 +28,15 @@
     background-color: #FFFFFF;
     color: #000000;
     border-color: rgb(237, 237, 237);
+}
+
+/* Change the color of menu element*/
+.ff_menu .active .ff_menu_link {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.ff_menu_link:hover {
+    background-color: #000000;
+    color: #FFFFFF;
 }
