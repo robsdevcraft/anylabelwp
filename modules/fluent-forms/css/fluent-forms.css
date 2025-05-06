@@ -78,3 +78,13 @@ input[type=color]:focus,input[type=color]:hover,input[type=date]:focus,input[typ
 .el-select-dropdown__item.selected {
     color: #000000;
 }
+
+/* Pill buttom color */
+.el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.el-radio-button__inner:hover {
+    color: #000000;
+}
