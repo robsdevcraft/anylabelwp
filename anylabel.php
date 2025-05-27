@@ -13,16 +13,21 @@ namespace AnylabelWP;
  * Text Domain: anylabelwp-plugin
  */
 
+
+// Escape if accessed directly 
 if (!defined('ABSPATH')) {
     exit;
 }
 
+// Version and filepath declarations
 define('ANYLABELWP_VERSION', '0.0.2');
 define('ANYLABELWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ANYLABELWP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+// Require the class autoloader
 require_once ANYLABELWP_PLUGIN_DIR . 'includes/class-anylabelwp-loader.php';
 
+// Strictly define is_plugin_active() function
 if (!function_exists('is_plugin_active')) {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 }
@@ -38,4 +43,5 @@ function run_anylabelwp()
     $plugin->run();
 }
 
+// Load plugin
 run_anylabelwp();
