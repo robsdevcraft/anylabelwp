@@ -104,3 +104,9 @@ input[type=color]:focus,input[type=color]:hover,input[type=date]:focus,input[typ
 .el-radio__input.is-checked+.el-radio__label {
     color: #000000;
 }
+
+.ff_filter_selected {
+    background-color: #FFFFFF;
+    border-color: #000000;
+    color: #000000;
+}
