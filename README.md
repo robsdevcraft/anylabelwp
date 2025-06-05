@@ -2,7 +2,7 @@
 
 A free, GPL licensed, open-source plugin to customize the appearance of 3rd-Party Plugins for a more unified and product agnostic user experience.
 
-# Current plugins with modifications 
+# Current supported plugins 
 
 - Fluent Forms (Free version)
 - Fluent CRM (Free version)
@@ -13,7 +13,7 @@ A free, GPL licensed, open-source plugin to customize the appearance of 3rd-Part
 
 - Replace branded logos with generic icons and naming conventions (Forms, CRM, Socials, SMTP)
 - Remove pro versions of plugin upgrade and menu links
-- Separate CSS and Javascript files enqueued for each plugin in WordPress admin pages
+- Separate CSS and Javascript files enqueued for each supported plugin in WordPress admin pages
 - Removes WordPress logo in admin bar
 - Removes WordPress version number
 - Removes WordPress admin Dashboard widgets
