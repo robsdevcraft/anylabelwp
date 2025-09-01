@@ -34,7 +34,8 @@ class AnylabelWP_Fluent_SMTP
      */
     public function enqueue_scripts()
     {
-        if (isset($_GET['page']) && $_GET['page'] === 'fluent-mail') {
+        $page = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+        if ($page === 'fluent-mail') {
             wp_enqueue_style(
                 'anylabelwp-fluent-smtp-style',
                 ANYLABELWP_PLUGIN_URL . 'modules/fluent-smtp/css/fluent-smtp.css',

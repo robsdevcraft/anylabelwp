@@ -36,7 +36,7 @@ if (!defined('ABSPATH')) {
             <?php echo esc_html__('Fluent CRM', 'anylabelwp-plugin'); ?>
         </a>
         <a href="<?php echo esc_url(add_query_arg(['page' => 'anylabelwp-settings', 'tab' => 'socials'])); ?>"
-           class="nav-tab <?php echo $current_tab === 'crm' ? 'nav-tab-active' : ''; ?>">
+           class="nav-tab <?php echo $current_tab === 'socials' ? 'nav-tab-active' : ''; ?>">
             <?php echo esc_html__('WP Social Ninja', 'anylabelwp-plugin'); ?>
         </a>
     </h2>
