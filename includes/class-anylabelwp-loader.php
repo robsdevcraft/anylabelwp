@@ -316,77 +316,101 @@ class Loader
     }
 
     /**
-     * Render logo selector component
+     * Render logo selector component with default logo and custom option toggle
      * 
      * @param string $field_name The name attribute for the input field
      * @param string $current_value Current logo URL value
-     * @param string $title Title for the selector section
-     * @param string $description Description text
-     * @param array $filter_category Optional category filter for default images
+     * @param string $filter_category Category filter for default images ('forms', 'crm', 'email', 'social')
      */
-    public static function render_logo_selector($field_name, $current_value = '', $title = '', $description = '', $filter_category = null)
+    public static function render_logo_selector($field_name, $current_value = '', $filter_category = null)
     {
+        // Security check
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        
         $loader = new self();
         $default_images = $loader->get_default_images();
         
-        // Filter by category if specified
+        // Get the specific default image for this category
+        $default_image = null;
         if ($filter_category) {
-            $default_images = array_filter($default_images, function($image) use ($filter_category) {
-                return $image['category'] === $filter_category;
-            });
+            foreach ($default_images as $image) {
+                if ($image['category'] === $filter_category) {
+                    $default_image = $image;
+                    break;
+                }
+            }
         }
         
-        if (empty($title)) {
-            $title = __('Logo Selection', 'anylabelwp-plugin');
-        }
+        // Determine if user is using custom logo (has a value that's not the default)
+        $using_custom = false;
+        $custom_checkbox_name = $field_name . '_use_custom';
         
-        if (empty($description)) {
-            $description = __('Choose a default logo or upload your own custom image.', 'anylabelwp-plugin');
+        if (!empty($current_value)) {
+            // Check if current value is NOT the default image URL
+            if (!$default_image || $current_value !== $default_image['url']) {
+                $using_custom = true;
+            }
         }
         
         ?>
-        <div class="anylabelwp-logo-selector">
-            <div class="logo-selector-header">
-                <h4><?php echo esc_html($title); ?></h4>
-                <p><?php echo esc_html($description); ?></p>
-            </div>
-            
-            <div class="logo-options-container">
-                <?php if (!empty($default_images)): ?>
-                <div class="default-images-section">
-                    <h5><?php _e('Default Images', 'anylabelwp-plugin'); ?></h5>
-                    <div class="default-images-grid">
-                        <?php foreach ($default_images as $image): ?>
-                        <a href="#" class="default-image-option" data-url="<?php echo esc_url($image['url']); ?>" title="<?php echo esc_attr($image['description']); ?>">
-                            <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['name']); ?>" />
-                            <div class="image-name"><?php echo esc_html($image['name']); ?></div>
-                        </a>
-                        <?php endforeach; ?>
+        <div class="anylabelwp-logo-selector" data-field-name="<?php echo esc_attr($field_name); ?>">
+            <?php if ($default_image): ?>
+            <!-- Default Logo Section -->
+            <div class="default-logo-section">
+                <div class="default-logo-preview">
+                    <img src="<?php echo esc_url($default_image['url']); ?>" alt="<?php echo esc_attr($default_image['name']); ?>" style="max-height: 40px; height: auto;" />
+                    <div class="default-logo-info">
+                        <strong><?php echo esc_html($default_image['name']); ?></strong>
+                        <p class="description"><?php echo esc_html($default_image['description']); ?></p>
                     </div>
                 </div>
-                <?php endif; ?>
-                
-                <div class="upload-options-section">
-                    <h5><?php _e('Custom Options', 'anylabelwp-plugin'); ?></h5>
-                    
+            </div>
+            <?php endif; ?>
+            
+            <!-- Custom Logo Toggle -->
+            <div class="custom-logo-toggle">
+                <label>
+                    <input type="checkbox" 
+                           class="use-custom-logo-checkbox" 
+                           <?php checked($using_custom); ?> />
+                    <?php _e('Use custom logo instead of default', 'anylabelwp-plugin'); ?>
+                </label>
+            </div>
+            
+            <!-- Hidden input for the actual logo URL -->
+            <input type="hidden" 
+                   name="<?php echo esc_attr($field_name); ?>" 
+                   class="logo-url-input" 
+                   value="<?php echo esc_attr($current_value); ?>" 
+                   data-default-url="<?php echo $default_image ? esc_attr($default_image['url']) : ''; ?>" />
+            
+            <!-- Custom Logo Options (hidden by default) -->
+            <div class="custom-logo-options" style="<?php echo $using_custom ? '' : 'display: none;'; ?>">
+                <div class="custom-logo-input-section">
+                    <label for="<?php echo esc_attr($field_name . '_custom'); ?>">
+                        <?php _e('Custom Logo URL:', 'anylabelwp-plugin'); ?>
+                    </label>
                     <input type="url" 
-                           name="<?php echo esc_attr($field_name); ?>" 
-                           class="logo-url-input" 
-                           value="<?php echo esc_attr($current_value); ?>" 
-                           placeholder="<?php _e('Enter image URL or use buttons below', 'anylabelwp-plugin'); ?>" />
+                           id="<?php echo esc_attr($field_name . '_custom'); ?>"
+                           class="custom-logo-url-input" 
+                           value="<?php echo $using_custom ? esc_attr($current_value) : ''; ?>" 
+                           placeholder="<?php _e('Enter image URL or use media library', 'anylabelwp-plugin'); ?>" />
                     
                     <div class="button-group">
-                        <button type="button" class="media-upload-button">
+                        <button type="button" class="button media-upload-button">
                             <?php _e('Choose from Media Library', 'anylabelwp-plugin'); ?>
                         </button>
-                        <button type="button" class="clear-logo-button">
-                            <?php _e('Clear', 'anylabelwp-plugin'); ?>
+                        <button type="button" class="button clear-custom-logo-button">
+                            <?php _e('Clear Custom Logo', 'anylabelwp-plugin'); ?>
                         </button>
                     </div>
                     
-                    <div class="logo-preview" <?php echo empty($current_value) ? 'style="display:none;"' : ''; ?>>
-                        <?php if (!empty($current_value)): ?>
-                        <img src="<?php echo esc_url($current_value); ?>" alt="<?php _e('Logo Preview', 'anylabelwp-plugin'); ?>" />
+                    <!-- Custom Logo Preview -->
+                    <div class="custom-logo-preview" <?php echo (!$using_custom || empty($current_value)) ? 'style="display:none;"' : ''; ?>>
+                        <?php if ($using_custom && !empty($current_value)): ?>
+                        <img src="<?php echo esc_url($current_value); ?>" alt="<?php _e('Custom Logo Preview', 'anylabelwp-plugin'); ?>" style="max-height: 40px; height: auto;" />
                         <?php endif; ?>
                     </div>
                 </div>

@@ -29,170 +29,175 @@
     margin-top: 20px;
 }
 
-/* Logo Selector Component */
+/* Logo Selector Component - New Design */
 .anylabelwp-logo-selector {
+    margin: 20px 0;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 20px;
     background: #fff;
-    margin-bottom: 20px;
 }
 
-.logo-selector-header {
+/* Default Logo Section */
+.default-logo-section {
     margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-
-.logo-selector-header h4 {
-    margin: 0 0 5px 0;
-    color: #333;
-}
-
-.logo-selector-header p {
-    margin: 0;
-    color: #666;
-    font-size: 13px;
-}
-
-.logo-options-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-.default-images-section {
-    flex: 2;
-    min-width: 300px;
-}
-
-.default-images-section h5 {
-    margin: 0 0 10px 0;
-    color: #333;
-}
-
-.default-images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.default-image-option {
-    border: 2px solid #ddd;
-    border-radius: 4px;
     padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: #fafafa;
-    text-decoration: none;
-    display: block;
+    background: #f9f9f9;
+    border-radius: 4px;
 }
 
-.default-image-option:hover {
-    border-color: #0073aa;
-    background: #f0f8ff;
-    text-decoration: none;
+.default-logo-preview {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.default-image-option.selected {
-    border-color: #0073aa;
-    background: #e3f2fd;
-    box-shadow: 0 0 0 1px #0073aa;
-}
-
-.default-image-option img {
-    max-width: 100%;
+.default-logo-preview img {
+    max-height: 40px;
     height: auto;
-    max-height: 30px;
-    margin-bottom: 5px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 5px;
+    background: white;
 }
 
-.default-image-option .image-name {
-    font-size: 11px;
-    color: #333;
+.default-logo-info strong {
+    color: #0073aa;
+    font-size: 14px;
+}
+
+.default-logo-info .description {
+    margin: 5px 0 0 0;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Custom Logo Toggle */
+.custom-logo-toggle {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+.custom-logo-toggle label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 500;
+    cursor: pointer;
 }
 
-.upload-options-section {
-    flex: 1;
-    min-width: 250px;
+.use-custom-logo-checkbox {
+    margin: 0 !important;
 }
 
-.upload-options-section h5 {
-    margin: 0 0 10px 0;
+/* Custom Logo Options */
+.custom-logo-options {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid #0073aa;
+}
+
+.custom-logo-input-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
     color: #333;
 }
 
-.logo-url-input {
+.custom-logo-url-input {
     width: 100%;
-    padding: 8px;
+    max-width: 400px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
+.custom-logo-url-input:focus {
+    border-color: #0073aa;
+    outline: none;
+    box-shadow: 0 0 0 1px #0073aa;
+}
+
+/* Button Group */
 .button-group {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 15px;
     flex-wrap: wrap;
 }
 
 .media-upload-button,
-.clear-logo-button {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background: #f7f7f7;
+.clear-custom-logo-button {
+    padding: 8px 16px;
     border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    color: #333;
     font-size: 13px;
-}
-
-.media-upload-button:hover,
-.clear-logo-button:hover {
-    background: #e7e7e7;
-    border-color: #ccc;
     text-decoration: none;
-    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.logo-preview {
+.media-upload-button {
+    background: #0073aa;
+    color: white;
+    border: 1px solid #0073aa;
+}
+
+.media-upload-button:hover {
+    background: #005a87;
+    color: white;
+}
+
+.clear-custom-logo-button {
+    background: #f7f7f7;
+    color: #666;
+    border: 1px solid #ccc;
+}
+
+.clear-custom-logo-button:hover {
+    background: #fff;
+    color: #333;
+    border-color: #999;
+}
+
+/* Custom Logo Preview */
+.custom-logo-preview {
+    margin-top: 10px;
+    padding: 10px;
+    background: white;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 10px;
-    background: #fafafa;
     text-align: center;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.logo-preview img {
-    max-width: 100%;
+.custom-logo-preview img {
+    max-height: 40px;
     height: auto;
-    max-height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
 }
 
-@media (max-width: 782px) {
-    .logo-options-container {
+/* Responsive Design */
+@media (max-width: 768px) {
+    .default-logo-preview {
         flex-direction: column;
-    }
-    
-    .default-images-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        align-items: flex-start;
+        gap: 10px;
     }
     
     .button-group {
         flex-direction: column;
+    }
+    
+    .media-upload-button,
+    .clear-custom-logo-button {
+        width: 100%;
+        text-align: center;
     }
 }
 
