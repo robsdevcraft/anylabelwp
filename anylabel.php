@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AnylabelWP
  * Plugin URI: https://github.com/wpoperator/anylabelwp
- * Description: White Label 3rd Party Plugins for WordPress.
+ * Description: White Label 3rd Party Plugins for WordPress. Perfect for agencies and WAAS providers.
  * Version: 0.0.2
  * Author: WPOperator
  * Author URI: https://wpoperator.com
@@ -14,11 +14,60 @@
  * Tested up to: 6.3
  * Requires PHP: 7.4
  * Network: false
+ * Update URI: https://github.com/wpoperator/anylabelwp
+ *
+ * @package AnylabelWP
+ * @author WPOperator
+ * @since 0.0.1
  */
 
 // Escape if accessed directly 
 if (!defined('ABSPATH')) {
     exit;
+}
+
+// Check minimum requirements
+if (!anylabelwp_check_requirements()) {
+    return;
+}
+
+/**
+ * Check plugin requirements
+ */
+function anylabelwp_check_requirements() {
+    global $wp_version;
+    
+    $min_wp = '5.0';
+    $min_php = '7.4';
+    
+    if (version_compare(PHP_VERSION, $min_php, '<')) {
+        add_action('admin_notices', function() use ($min_php) {
+            echo '<div class="notice notice-error"><p>';
+            printf(
+                __('AnylabelWP requires PHP %s or higher. You are running PHP %s.', 'anylabelwp-plugin'),
+                $min_php,
+                PHP_VERSION
+            );
+            echo '</p></div>';
+        });
+        return false;
+    }
+    
+    if (version_compare($wp_version, $min_wp, '<')) {
+        add_action('admin_notices', function() use ($min_wp) {
+            global $wp_version;
+            echo '<div class="notice notice-error"><p>';
+            printf(
+                __('AnylabelWP requires WordPress %s or higher. You are running WordPress %s.', 'anylabelwp-plugin'),
+                $min_wp,
+                $wp_version
+            );
+            echo '</p></div>';
+        });
+        return false;
+    }
+    
+    return true;
 }
 
 // Version and filepath declarations
@@ -53,6 +102,14 @@ function anylabelwp_activate()
     // Set default options
     if (!get_option('anylabelwp_allowed_roles')) {
         update_option('anylabelwp_allowed_roles', ['administrator']);
+    }
+    
+    // Set activation notice
+    set_transient('anylabelwp_activation_notice', true, 30);
+    
+    // Store activation time
+    if (!get_option('anylabelwp_activation_time')) {
+        update_option('anylabelwp_activation_time', time());
     }
     
     // Create any necessary database tables or options

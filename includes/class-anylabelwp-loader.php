@@ -11,11 +11,129 @@ class Loader
      */
     public function run()
     {
+        // Load translations
+        add_action('init', [$this, 'load_textdomain']);
+        
         add_action('admin_menu', [$this, 'add_plugin_admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_styles']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
+        // Add plugin action links
+        add_filter('plugin_action_links_' . plugin_basename(ANYLABELWP_PLUGIN_DIR . 'anylabel.php'), [$this, 'add_plugin_action_links']);
+        
+        // Add plugin meta links
+        add_filter('plugin_row_meta', [$this, 'add_plugin_meta_links'], 10, 2);
+        
+        // Admin notices
+        add_action('admin_notices', [$this, 'admin_notices']);
+
         $this->load_modules();
+    }
+
+    /**
+     * Add action links to plugin list page
+     */
+    public function add_plugin_action_links($links)
+    {
+        $settings_link = sprintf(
+            '<a href="%s">%s</a>',
+            admin_url('options-general.php?page=anylabelwp-settings'),
+            __('Settings', 'anylabelwp-plugin')
+        );
+        
+        array_unshift($links, $settings_link);
+        return $links;
+    }
+
+    /**
+     * Add meta links to plugin list page
+     */
+    public function add_plugin_meta_links($links, $file)
+    {
+        if ($file === plugin_basename(ANYLABELWP_PLUGIN_DIR . 'anylabel.php')) {
+            $links[] = sprintf(
+                '<a href="%s" target="_blank">%s</a>',
+                'https://github.com/wpoperator/anylabelwp',
+                __('GitHub', 'anylabelwp-plugin')
+            );
+            $links[] = sprintf(
+                '<a href="%s" target="_blank">%s</a>',
+                'https://github.com/wpoperator/anylabelwp/issues',
+                __('Support', 'anylabelwp-plugin')
+            );
+            $links[] = sprintf(
+                '<a href="%s" target="_blank">%s</a>',
+                'https://github.com/wpoperator/anylabelwp#readme',
+                __('Documentation', 'anylabelwp-plugin')
+            );
+        }
+        return $links;
+    }
+
+    /**
+     * Show admin notices
+     */
+    public function admin_notices()
+    {
+        // Check if this is first activation
+        if (get_transient('anylabelwp_activation_notice')) {
+            delete_transient('anylabelwp_activation_notice');
+            
+            printf(
+                '<div class="notice notice-success is-dismissible"><p>%s <a href="%s">%s</a></p></div>',
+                __('AnylabelWP activated successfully!', 'anylabelwp-plugin'),
+                admin_url('options-general.php?page=anylabelwp-settings'),
+                __('Configure Settings', 'anylabelwp-plugin')
+            );
+        }
+        
+        // Check for supported plugins
+        $this->check_supported_plugins();
+    }
+
+    /**
+     * Check if supported plugins are installed
+     */
+    private function check_supported_plugins()
+    {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        
+        $supported_plugins = [
+            'fluent-smtp/fluent-smtp.php' => 'FluentSMTP',
+            'fluentform/fluentform.php' => 'Fluent Forms',
+            'fluent-crm/fluent-crm.php' => 'FluentCRM',
+            'wp-social-ninja/wp-social-ninja.php' => 'WP Social Ninja'
+        ];
+        
+        $inactive_plugins = [];
+        foreach ($supported_plugins as $plugin_file => $plugin_name) {
+            if (!is_plugin_active($plugin_file)) {
+                $inactive_plugins[] = $plugin_name;
+            }
+        }
+        
+        if (!empty($inactive_plugins) && !get_user_meta(get_current_user_id(), 'anylabelwp_hide_plugin_notice', true)) {
+            printf(
+                '<div class="notice notice-info is-dismissible" data-dismissible="anylabelwp-plugin-notice"><p>%s <strong>%s</strong>. %s</p></div>',
+                __('AnylabelWP can white-label these plugins:', 'anylabelwp-plugin'),
+                implode(', ', $inactive_plugins),
+                __('Install and activate them to use AnylabelWP features.', 'anylabelwp-plugin')
+            );
+        }
+    }
+
+    /**
+     * Load plugin text domain for translations
+     */
+    public function load_textdomain()
+    {
+        load_plugin_textdomain(
+            'anylabelwp-plugin',
+            false,
+            dirname(plugin_basename(ANYLABELWP_PLUGIN_DIR)) . '/languages/'
+        );
     }
 
     /**
