@@ -126,10 +126,15 @@ class AnylabelWP_WP_Social_Ninja
             <h2><?php esc_html_e('WP Social Ninja Settings', 'anylabelwp-plugin'); ?></h2>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Custom WP Social Ninja Logo URL', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom WP Social Ninja Logo', 'anylabelwp-plugin'); ?></th>
                     <td>
-                        <input type="text" name="anylabelwp_wp_social_ninja_logo_url"
-                            value="<?php echo esc_attr(get_option('anylabelwp_wp_social_ninja_logo_url')); ?>" />
+                        <?php 
+                        \AnylabelWP\Loader::render_logo_selector(
+                            'anylabelwp_wp_social_ninja_logo_url',
+                            get_option('anylabelwp_wp_social_ninja_logo_url'),
+                            'social'
+                        ); 
+                        ?>
                     </td>
                 </tr>
             </table>

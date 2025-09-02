@@ -29,6 +29,173 @@
     margin-top: 20px;
 }
 
+/* Logo Selector Component */
+.anylabelwp-logo-selector {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.logo-selector-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.logo-selector-header h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.logo-selector-header p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.logo-options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.default-images-section {
+    flex: 2;
+    min-width: 300px;
+}
+
+.default-images-section h5 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.default-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.default-image-option {
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    text-decoration: none;
+    display: block;
+}
+
+.default-image-option:hover {
+    border-color: #0073aa;
+    background: #f0f8ff;
+    text-decoration: none;
+}
+
+.default-image-option.selected {
+    border-color: #0073aa;
+    background: #e3f2fd;
+    box-shadow: 0 0 0 1px #0073aa;
+}
+
+.default-image-option img {
+    max-width: 100%;
+    height: auto;
+    max-height: 30px;
+    margin-bottom: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.default-image-option .image-name {
+    font-size: 11px;
+    color: #333;
+    font-weight: 500;
+}
+
+.upload-options-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.upload-options-section h5 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.logo-url-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.media-upload-button,
+.clear-logo-button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+}
+
+.media-upload-button:hover,
+.clear-logo-button:hover {
+    background: #e7e7e7;
+    border-color: #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.logo-preview {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fafafa;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-preview img {
+    max-width: 100%;
+    height: auto;
+    max-height: 50px;
+}
+
+@media (max-width: 782px) {
+    .logo-options-container {
+        flex-direction: column;
+    }
+    
+    .default-images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+}
+
 /* Remove WordPress Icon in admin bar */
 li#wp-admin-bar-wp-logo.menupop {
     display: none;

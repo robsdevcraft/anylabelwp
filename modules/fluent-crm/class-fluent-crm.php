@@ -126,10 +126,15 @@ class AnylabelWP_Fluent_CRM
             <h2><?php esc_html_e('Fluent CRM Settings', 'anylabelwp-plugin'); ?></h2>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Custom Fluent CRM Logo URL', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom Fluent CRM Logo', 'anylabelwp-plugin'); ?></th>
                     <td>
-                        <input type="text" name="anylabelwp_fluent_crm_logo_url"
-                            value="<?php echo esc_attr(get_option('anylabelwp_fluent_crm_logo_url')); ?>" />
+                        <?php 
+                        \AnylabelWP\Loader::render_logo_selector(
+                            'anylabelwp_fluent_crm_logo_url',
+                            get_option('anylabelwp_fluent_crm_logo_url'),
+                            'crm'
+                        ); 
+                        ?>
                     </td>
                 </tr>
             </table>
