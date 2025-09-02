@@ -114,14 +114,17 @@ class Loader
             }
         }
         
-        if (!empty($inactive_plugins) && !get_user_meta(get_current_user_id(), 'anylabelwp_hide_plugin_notice', true)) {
-            printf(
-                '<div class="notice notice-info is-dismissible" data-dismissible="anylabelwp-plugin-notice"><p>%s <strong>%s</strong>. %s</p></div>',
-                __('AnylabelWP can white-label these plugins:', 'anylabelwp-plugin'),
-                implode(', ', $inactive_plugins),
-                __('Install and activate them to use AnylabelWP features.', 'anylabelwp-plugin')
-            );
-        }
+        /**
+         * Notifcation
+         */
+        // if (!empty($inactive_plugins) && !get_user_meta(get_current_user_id(), 'anylabelwp_hide_plugin_notice', true)) {
+        //     printf(
+        //         '<div class="notice notice-info is-dismissible" data-dismissible="anylabelwp-plugin-notice"><p>%s <strong>%s</strong>. %s</p></div>',
+        //         __('AnylabelWP can white-label these plugins:', 'anylabelwp-plugin'),
+        //         implode(', ', $inactive_plugins),
+        //         __('Install and activate them to use AnylabelWP features.', 'anylabelwp-plugin')
+        //     );
+        // }
     }
 
     /**
@@ -196,14 +199,11 @@ class Loader
     }
 
     /**
-     * Enqueue plugin admin CSS
+     * Enqueue plugin admin CSS - loads on ALL admin pages for global modifications
      */
     public function enqueue_admin_styles($hook)
     {
-        if ($hook !== 'settings_page_anylabelwp-settings') {
-            return;
-        }
-        
+        // Load global admin styles on ALL admin pages
         wp_enqueue_style(
             'anylabelwp-admin-styles',
             ANYLABELWP_PLUGIN_URL . 'assets/css/admin.css',
@@ -213,10 +213,11 @@ class Loader
     }
 
     /**
-     * Enqueue plugin admin JavaScript
+     * Enqueue plugin admin JavaScript - only on settings page
      */
     public function enqueue_admin_scripts($hook)
     {
+        // Only load JavaScript on our plugin's settings page
         if ($hook !== 'settings_page_anylabelwp-settings') {
             return;
         }
