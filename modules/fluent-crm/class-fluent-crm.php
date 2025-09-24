@@ -55,6 +55,7 @@ class AnylabelWP_Fluent_CRM
                 'anylabelwp',
                 [
                     'new_url' => esc_url(get_option('anylabelwp_fluent_crm_logo_url')),
+                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-crm-default.png'),
                 ]
             );
         }
@@ -92,23 +93,8 @@ class AnylabelWP_Fluent_CRM
             [
                 'sanitize_callback' => 'esc_url_raw',
                 'default'           => '',
-                'validate_callback' => [$this, 'validate_logo_url'],
             ]
         );
-    }
-
-        /**
-     * Validate logo URL setting
-     *
-     * @param string $url
-     * @return bool
-     */
-    public function validate_logo_url($url)
-    {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -121,20 +107,43 @@ class AnylabelWP_Fluent_CRM
         }
 
         wp_nonce_field('anylabelwp_fluent_crm_settings', 'anylabelwp_fluent_crm_nonce');
+        
+        $current_logo = get_option('anylabelwp_fluent_crm_logo_url', '');
+        $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-crm-default.png';
         ?>
         <div class="tab-content crm-settings">
             <h2><?php esc_html_e('Fluent CRM Settings', 'anylabelwp-plugin'); ?></h2>
+            
+            <!-- Default Logo Preview -->
+            <h3><?php _e('Default Logo', 'anylabelwp-plugin'); ?></h3>
+            <div style="margin: 10px 0;">
+                <img src="<?php echo esc_url($default_logo); ?>" 
+                     alt="<?php _e('Default CRM Logo', 'anylabelwp-plugin'); ?>" 
+                     style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
+                <p class="description"><?php _e('This is the default logo that will be used if no custom logo is set.', 'anylabelwp-plugin'); ?></p>
+            </div>
+
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Custom Fluent CRM Logo', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom Fluent CRM Logo URL', 'anylabelwp-plugin'); ?></th>
                     <td>
-                        <?php 
-                        \AnylabelWP\Loader::render_logo_selector(
-                            'anylabelwp_fluent_crm_logo_url',
-                            get_option('anylabelwp_fluent_crm_logo_url'),
-                            'crm'
-                        ); 
-                        ?>
+                        <input type="url" 
+                               name="anylabelwp_fluent_crm_logo_url" 
+                               value="<?php echo esc_attr($current_logo); ?>" 
+                               class="regular-text" 
+                               placeholder="<?php _e('Enter custom logo URL or leave empty to use default', 'anylabelwp-plugin'); ?>" />
+                        <p class="description">
+                            <?php _e('Enter a custom logo URL, or leave empty to use the default logo above.', 'anylabelwp-plugin'); ?>
+                        </p>
+                        
+                        <?php if (!empty($current_logo)): ?>
+                        <div style="margin-top: 10px;">
+                            <strong><?php _e('Current Custom Logo:', 'anylabelwp-plugin'); ?></strong><br/>
+                            <img src="<?php echo esc_url($current_logo); ?>" 
+                                 alt="<?php _e('Current Custom Logo', 'anylabelwp-plugin'); ?>" 
+                                 style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
+                        </div>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
