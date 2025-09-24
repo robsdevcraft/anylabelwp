@@ -1,7 +1,6 @@
 /**
  * AnylabelWP Logo Selection Component
  * Pure vanilla JavaScript implementation - no jQuery dependencies
- * Updated for new checkbox-based logo selection UI
  * 
  * @package AnylabelWP
  * @since 0.0.3
@@ -56,20 +55,20 @@
         setupLogoSelector: function(container) {
             const checkbox = container.querySelector('.use-custom-logo-checkbox');
             const customOptions = container.querySelector('.custom-logo-options');
-            const hiddenInput = container.querySelector('.logo-url-input');
+            const hiddenInput = container.querySelector('.logo-path-input');
             const customInput = container.querySelector('.custom-logo-url-input');
             const preview = container.querySelector('.custom-logo-preview');
             const mediaButton = container.querySelector('.media-upload-button');
             const clearButton = container.querySelector('.clear-custom-logo-button');
 
             if (!checkbox || !customOptions || !hiddenInput) {
-                console.warn('Logo selector elements not found');
+                console.warn('AnylabelWP: Logo selector elements not found');
                 return;
             }
 
             // Handle checkbox toggle
             checkbox.addEventListener('change', function() {
-                this.toggleCustomOptions(checkbox, customOptions, hiddenInput, customInput);
+                this.toggleCustomOptions(checkbox, customOptions, hiddenInput, customInput, preview);
             }.bind(this));
 
             // Handle custom URL input changes
@@ -103,36 +102,39 @@
          * @param {HTMLElement} customOptions - The custom options container
          * @param {HTMLElement} hiddenInput - The hidden input field
          * @param {HTMLElement} customInput - The custom URL input field
+         * @param {HTMLElement} preview - The preview container
          */
-        toggleCustomOptions: function(checkbox, customOptions, hiddenInput, customInput) {
+        toggleCustomOptions: function(checkbox, customOptions, hiddenInput, customInput, preview) {
             if (checkbox.checked) {
                 // Show custom options
                 customOptions.style.display = 'block';
                 
                 // If there's a current value that's not the default, use it
                 const currentValue = hiddenInput.value;
-                const defaultUrl = hiddenInput.getAttribute('data-default-url');
+                const defaultPath = hiddenInput.getAttribute('data-default-path');
                 
-                if (currentValue && currentValue !== defaultUrl) {
+                if (currentValue && currentValue !== defaultPath) {
                     if (customInput) {
-                        customInput.value = currentValue;
+                        // Convert path to URL for display
+                        customInput.value = this.pathToUrl(currentValue);
+                        this.updatePreview(customInput.value, preview);
                     }
                 }
             } else {
                 // Hide custom options and revert to default
                 customOptions.style.display = 'none';
                 
-                const defaultUrl = hiddenInput.getAttribute('data-default-url');
-                hiddenInput.value = defaultUrl || '';
+                const defaultPath = hiddenInput.getAttribute('data-default-path');
+                hiddenInput.value = defaultPath || '';
                 
                 if (customInput) {
                     customInput.value = '';
                 }
                 
                 // Hide preview
-                const preview = customOptions.querySelector('.custom-logo-preview');
                 if (preview) {
                     preview.style.display = 'none';
+                    preview.innerHTML = '';
                 }
             }
         },
@@ -146,7 +148,8 @@
          */
         updateCustomLogo: function(url, hiddenInput, preview) {
             if (hiddenInput) {
-                hiddenInput.value = url;
+                // Store as relative path if it's a plugin default, otherwise store URL
+                hiddenInput.value = this.urlToPath(url);
             }
             
             this.updatePreview(url, preview);
@@ -169,15 +172,21 @@
                 img.style.height = 'auto';
                 img.style.border = '1px solid #ddd';
                 img.style.borderRadius = '2px';
+                img.style.padding = '5px';
+                img.style.background = 'white';
                 
                 // Handle image load errors
                 img.addEventListener('error', function() {
-                    preview.innerHTML = '<div class="logo-error" style="color: #d63638;">Invalid image URL</div>';
+                    preview.innerHTML = '<div class="logo-error" style="color: #d63638; padding: 10px;">' + 
+                                      'Invalid image URL or image failed to load' + '</div>';
+                });
+                
+                img.addEventListener('load', function() {
+                    preview.style.display = 'block';
                 });
                 
                 preview.innerHTML = '';
                 preview.appendChild(img);
-                preview.style.display = 'block';
             } else {
                 preview.style.display = 'none';
                 preview.innerHTML = '';
@@ -194,7 +203,7 @@
         openMediaUploader: function(hiddenInput, customInput, preview) {
             // Check if WordPress media library is available
             if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
-                console.error('WordPress media library not available');
+                console.error('AnylabelWP: WordPress media library not available');
                 alert('Media library is not available. Please enter image URL manually.');
                 return;
             }
@@ -226,7 +235,7 @@
                         this.updatePreview(attachment.url, preview);
                     }
                 } catch (error) {
-                    console.error('Error selecting media:', error);
+                    console.error('AnylabelWP: Error selecting media:', error);
                 }
             }.bind(this));
 
@@ -254,15 +263,60 @@
                 customInput.value = '';
             }
             
-            // Revert to default URL
-            const defaultUrl = hiddenInput.getAttribute('data-default-url');
-            hiddenInput.value = defaultUrl || '';
+            // Revert to default path
+            const defaultPath = hiddenInput.getAttribute('data-default-path');
+            hiddenInput.value = defaultPath || '';
             
             // Hide preview
             if (preview) {
                 preview.style.display = 'none';
                 preview.innerHTML = '';
             }
+        },
+
+        /**
+         * Convert URL to storage path (relative path for defaults, URL for others)
+         * 
+         * @param {string} url - Full URL
+         * @returns {string} - Storage path
+         */
+        urlToPath: function(url) {
+            if (!url) return '';
+            
+            // Check if it's a plugin default image
+            if (url.includes('/anylabelwp/assets/images/defaults/')) {
+                const parts = url.split('/anylabelwp/assets/images/defaults/');
+                if (parts.length > 1) {
+                    return 'assets/images/defaults/' + parts[1];
+                }
+            }
+            
+            // Return full URL for non-default images
+            return url;
+        },
+
+        /**
+         * Convert storage path to display URL
+         * 
+         * @param {string} path - Storage path
+         * @returns {string} - Display URL
+         */
+        pathToUrl: function(path) {
+            if (!path) return '';
+            
+            // If it's already a full URL, return as-is
+            if (path.startsWith('http://') || path.startsWith('https://')) {
+                return path;
+            }
+            
+            // If it's a relative plugin path, construct full URL
+            if (path.startsWith('assets/images/defaults/')) {
+                return window.anylabelwp_admin?.plugin_url ? 
+                       window.anylabelwp_admin.plugin_url + path : 
+                       path;
+            }
+            
+            return path;
         },
 
         /**
@@ -276,7 +330,7 @@
             
             // Basic URL validation - reject obviously malicious content
             if (url.includes('javascript:') || url.includes('data:text/html')) {
-                console.warn('Potentially unsafe URL blocked:', url);
+                console.warn('AnylabelWP: Potentially unsafe URL blocked:', url);
                 return '';
             }
             

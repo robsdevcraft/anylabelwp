@@ -35,6 +35,10 @@ class Loader
      */
     public function add_plugin_action_links($links)
     {
+        if (!current_user_can('manage_options')) {
+            return $links;
+        }
+
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
             admin_url('options-general.php?page=anylabelwp-settings'),
@@ -75,6 +79,10 @@ class Loader
      */
     public function admin_notices()
     {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+
         // Check if this is first activation
         if (get_transient('anylabelwp_activation_notice')) {
             delete_transient('anylabelwp_activation_notice');
@@ -113,18 +121,6 @@ class Loader
                 $inactive_plugins[] = $plugin_name;
             }
         }
-        
-        /**
-         * Notifcation
-         */
-        // if (!empty($inactive_plugins) && !get_user_meta(get_current_user_id(), 'anylabelwp_hide_plugin_notice', true)) {
-        //     printf(
-        //         '<div class="notice notice-info is-dismissible" data-dismissible="anylabelwp-plugin-notice"><p>%s <strong>%s</strong>. %s</p></div>',
-        //         __('AnylabelWP can white-label these plugins:', 'anylabelwp-plugin'),
-        //         implode(', ', $inactive_plugins),
-        //         __('Install and activate them to use AnylabelWP features.', 'anylabelwp-plugin')
-        //     );
-        // }
     }
 
     /**
@@ -177,6 +173,10 @@ class Loader
      */
     public function add_plugin_admin_menu()
     {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+
         add_options_page(
             __('AnylabelWP Settings', 'anylabelwp-plugin'),
             __('AnylabelWP', 'anylabelwp-plugin'),
@@ -214,7 +214,6 @@ class Loader
 
     /**
      * Enqueue plugin admin JavaScript - only on settings page
-     * Pure vanilla JavaScript implementation without jQuery dependencies
      */
     public function enqueue_admin_scripts($hook)
     {
@@ -228,34 +227,35 @@ class Loader
             return;
         }
         
-        // Enqueue WordPress media uploader (required for media library integration)
+        // Enqueue WordPress media uploader
         wp_enqueue_media();
         
-        // Enqueue admin JavaScript (vanilla JS, no jQuery dependency)
+        // Enqueue admin JavaScript
         wp_enqueue_script(
             'anylabelwp-admin-script',
             ANYLABELWP_PLUGIN_URL . 'assets/js/admin.js',
-            [], // No dependencies - pure vanilla JavaScript
+            [],
             ANYLABELWP_VERSION,
             true
         );
         
-        // Enqueue logo selector JavaScript (vanilla JS with media library support)
+        // Enqueue logo selector JavaScript
         wp_enqueue_script(
             'anylabelwp-logo-selector',
             ANYLABELWP_PLUGIN_URL . 'assets/js/logo-selector.js',
-            ['media-upload', 'media-views'], // Only WordPress media dependencies, no jQuery
+            ['media-upload', 'media-views'],
             ANYLABELWP_VERSION,
             true
         );
         
-        // Localize script with default images data and security nonce
+        // Localize script with data and security nonce
         wp_localize_script(
             'anylabelwp-logo-selector',
             'anylabelwp_admin',
             [
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('anylabelwp_logo_nonce'),
+                'plugin_url' => ANYLABELWP_PLUGIN_URL,
                 'default_images' => $this->get_default_images(),
                 'media_title' => __('Choose Logo Image', 'anylabelwp-plugin'),
                 'media_button' => __('Use This Image', 'anylabelwp-plugin'),
@@ -264,8 +264,7 @@ class Loader
     }
 
     /**
-     * Get available default images
-     * Updated to use custom PNG media files
+     * Get available default images with relative paths
      * 
      * @return array Array of default images with metadata
      */
@@ -273,27 +272,27 @@ class Loader
     {
         $default_images = [];
         $defaults_dir = ANYLABELWP_PLUGIN_DIR . 'assets/images/defaults/';
-        $defaults_url = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/';
+        $defaults_relative_path = 'assets/images/defaults/';
         
-        // Updated image files array to match your custom media files
+        // Default image files mapped to categories
         $image_files = [
             'anylabel-forms-default.png' => [
-                'name' => __('AnylabelWP Forms Logo', 'anylabelwp-plugin'),
+                'name' => __('Default Forms Logo', 'anylabelwp-plugin'),
                 'description' => __('Default logo for Fluent Forms white-labeling', 'anylabelwp-plugin'),
                 'category' => 'forms'
             ],
             'anylabel-crm-default.png' => [
-                'name' => __('AnylabelWP CRM Logo', 'anylabelwp-plugin'),
+                'name' => __('Default CRM Logo', 'anylabelwp-plugin'),
                 'description' => __('Default logo for Fluent CRM white-labeling', 'anylabelwp-plugin'),
                 'category' => 'crm'
             ],
             'anylabel-smtp-default.png' => [
-                'name' => __('AnylabelWP SMTP Logo', 'anylabelwp-plugin'),
+                'name' => __('Default SMTP Logo', 'anylabelwp-plugin'),
                 'description' => __('Default logo for Fluent SMTP white-labeling', 'anylabelwp-plugin'),
                 'category' => 'email'
             ],
             'anylabel-social-default.png' => [
-                'name' => __('AnylabelWP Social Logo', 'anylabelwp-plugin'),
+                'name' => __('Default Social Logo', 'anylabelwp-plugin'),
                 'description' => __('Default logo for WP Social Ninja white-labeling', 'anylabelwp-plugin'),
                 'category' => 'social'
             ],
@@ -303,8 +302,9 @@ class Loader
             if (file_exists($defaults_dir . $filename)) {
                 $default_images[] = [
                     'filename' => $filename,
-                    'url' => $defaults_url . $filename,
-                    'path' => $defaults_dir . $filename,
+                    'url' => ANYLABELWP_PLUGIN_URL . $defaults_relative_path . $filename,
+                    'relative_path' => $defaults_relative_path . $filename,
+                    'full_path' => $defaults_dir . $filename,
                     'name' => $data['name'],
                     'description' => $data['description'],
                     'category' => $data['category']
@@ -316,11 +316,51 @@ class Loader
     }
 
     /**
-     * Render logo selector component with default logo and custom option toggle
+     * Get logo URL with fallback to default
+     * 
+     * @param string $option_name The option name for the logo
+     * @param string $category Category for fallback default
+     * @return string Logo URL
+     */
+    public function get_logo_url($option_name, $category = '')
+    {
+        $stored_path = get_option($option_name, '');
+        
+        // If we have a stored path, construct the full URL
+        if (!empty($stored_path)) {
+            // Check if it's already a full URL
+            if (filter_var($stored_path, FILTER_VALIDATE_URL)) {
+                return $stored_path;
+            }
+            
+            // If it's a relative path, construct full URL
+            if (strpos($stored_path, 'assets/images/defaults/') === 0) {
+                return ANYLABELWP_PLUGIN_URL . $stored_path;
+            }
+            
+            // If it's a WordPress media library path
+            return wp_get_attachment_url($stored_path) ?: home_url($stored_path);
+        }
+        
+        // Fallback to default image based on category
+        if (!empty($category)) {
+            $default_images = $this->get_default_images();
+            foreach ($default_images as $image) {
+                if ($image['category'] === $category) {
+                    return $image['url'];
+                }
+            }
+        }
+        
+        return '';
+    }
+
+    /**
+     * Render logo selector component
      * 
      * @param string $field_name The name attribute for the input field
-     * @param string $current_value Current logo URL value
-     * @param string $filter_category Category filter for default images ('forms', 'crm', 'email', 'social')
+     * @param string $current_value Current logo value (path or URL)
+     * @param string $filter_category Category filter for default images
      */
     public static function render_logo_selector($field_name, $current_value = '', $filter_category = null)
     {
@@ -343,15 +383,19 @@ class Loader
             }
         }
         
-        // Determine if user is using custom logo (has a value that's not the default)
+        // Determine if user is using custom logo
         $using_custom = false;
-        $custom_checkbox_name = $field_name . '_use_custom';
-        
         if (!empty($current_value)) {
-            // Check if current value is NOT the default image URL
-            if (!$default_image || $current_value !== $default_image['url']) {
+            // Check if current value is NOT the default image path
+            if (!$default_image || $current_value !== $default_image['relative_path']) {
                 $using_custom = true;
             }
+        }
+        
+        // Get display URL for current value
+        $current_display_url = '';
+        if (!empty($current_value)) {
+            $current_display_url = $loader->get_logo_url($field_name, $filter_category);
         }
         
         ?>
@@ -359,8 +403,11 @@ class Loader
             <?php if ($default_image): ?>
             <!-- Default Logo Section -->
             <div class="default-logo-section">
+                <h4><?php _e('Default Logo', 'anylabelwp-plugin'); ?></h4>
                 <div class="default-logo-preview">
-                    <img src="<?php echo esc_url($default_image['url']); ?>" alt="<?php echo esc_attr($default_image['name']); ?>" style="max-height: 40px; height: auto;" />
+                    <img src="<?php echo esc_url($default_image['url']); ?>" 
+                         alt="<?php echo esc_attr($default_image['name']); ?>" 
+                         style="max-height: 40px; height: auto;" />
                     <div class="default-logo-info">
                         <strong><?php echo esc_html($default_image['name']); ?></strong>
                         <p class="description"><?php echo esc_html($default_image['description']); ?></p>
@@ -375,18 +422,18 @@ class Loader
                     <input type="checkbox" 
                            class="use-custom-logo-checkbox" 
                            <?php checked($using_custom); ?> />
-                    <?php _e('Use custom logo instead of default', 'anylabelwp-plugin'); ?>
+                    <?php _e('Use Custom Logo', 'anylabelwp-plugin'); ?>
                 </label>
             </div>
             
-            <!-- Hidden input for the actual logo URL -->
+            <!-- Hidden input for the actual logo path -->
             <input type="hidden" 
                    name="<?php echo esc_attr($field_name); ?>" 
-                   class="logo-url-input" 
+                   class="logo-path-input" 
                    value="<?php echo esc_attr($current_value); ?>" 
-                   data-default-url="<?php echo $default_image ? esc_attr($default_image['url']) : ''; ?>" />
+                   data-default-path="<?php echo $default_image ? esc_attr($default_image['relative_path']) : ''; ?>" />
             
-            <!-- Custom Logo Options (hidden by default) -->
+            <!-- Custom Logo Options -->
             <div class="custom-logo-options" style="<?php echo $using_custom ? '' : 'display: none;'; ?>">
                 <div class="custom-logo-input-section">
                     <label for="<?php echo esc_attr($field_name . '_custom'); ?>">
@@ -395,7 +442,7 @@ class Loader
                     <input type="url" 
                            id="<?php echo esc_attr($field_name . '_custom'); ?>"
                            class="custom-logo-url-input" 
-                           value="<?php echo $using_custom ? esc_attr($current_value) : ''; ?>" 
+                           value="<?php echo $using_custom ? esc_attr($current_display_url) : ''; ?>" 
                            placeholder="<?php _e('Enter image URL or use media library', 'anylabelwp-plugin'); ?>" />
                     
                     <div class="button-group">
@@ -408,9 +455,11 @@ class Loader
                     </div>
                     
                     <!-- Custom Logo Preview -->
-                    <div class="custom-logo-preview" <?php echo (!$using_custom || empty($current_value)) ? 'style="display:none;"' : ''; ?>>
-                        <?php if ($using_custom && !empty($current_value)): ?>
-                        <img src="<?php echo esc_url($current_value); ?>" alt="<?php _e('Custom Logo Preview', 'anylabelwp-plugin'); ?>" style="max-height: 40px; height: auto;" />
+                    <div class="custom-logo-preview" <?php echo (!$using_custom || empty($current_display_url)) ? 'style="display:none;"' : ''; ?>>
+                        <?php if ($using_custom && !empty($current_display_url)): ?>
+                        <img src="<?php echo esc_url($current_display_url); ?>" 
+                             alt="<?php _e('Custom Logo Preview', 'anylabelwp-plugin'); ?>" 
+                             style="max-height: 40px; height: auto;" />
                         <?php endif; ?>
                     </div>
                 </div>
