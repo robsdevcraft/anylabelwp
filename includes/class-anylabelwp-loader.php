@@ -72,55 +72,6 @@ class Loader
     }
 
     /**
-     * Show admin notices
-     */
-    public function admin_notices()
-    {
-        if (!current_user_can('manage_options')) {
-            return;
-        }
-
-        // Check if this is first activation
-        if (get_transient('anylabelwp_activation_notice')) {
-            delete_transient('anylabelwp_activation_notice');
-            
-            printf(
-                '<div class="notice notice-success is-dismissible"><p>%s <a href="%s">%s</a></p></div>',
-                __('AnylabelWP activated successfully!', 'anylabelwp-plugin'),
-                admin_url('options-general.php?page=anylabelwp-settings'),
-                __('Configure Settings', 'anylabelwp-plugin')
-            );
-        }
-        
-        // Check for supported plugins
-        $this->check_supported_plugins();
-    }
-
-    /**
-     * Check if supported plugins are installed
-     */
-    private function check_supported_plugins()
-    {
-        if (!current_user_can('manage_options')) {
-            return;
-        }
-        
-        $supported_plugins = [
-            'fluent-smtp/fluent-smtp.php' => 'FluentSMTP',
-            'fluentform/fluentform.php' => 'Fluent Forms',
-            'fluent-crm/fluent-crm.php' => 'FluentCRM',
-            'wp-social-reviews/wp-social-reviews.php' => 'WP Social Ninja'
-        ];
-        
-        $inactive_plugins = [];
-        foreach ($supported_plugins as $plugin_file => $plugin_name) {
-            if (!is_plugin_active($plugin_file)) {
-                $inactive_plugins[] = $plugin_name;
-            }
-        }
-    }
-
-    /**
      * Load plugin text domain for translations
      */
     public function load_textdomain()
