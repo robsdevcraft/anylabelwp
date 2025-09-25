@@ -14,8 +14,6 @@ class AnylabelWP_WP_Social_Ninja
             add_action('admin_menu', [$this, 'change_wp_social_ninja_menu_name'], 999);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('anylabelwp_render_wp_social_ninja_settings', [$this, 'render_settings']);
-        } else {
-            add_action('admin_notices', [$this, 'wp_social_ninja_not_active_notice']);
         }
     }
 

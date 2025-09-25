@@ -14,8 +14,6 @@ class AnylabelWP_Fluent_Forms
             add_action('admin_menu', [$this, 'change_fluent_forms_menu_name'], 999);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('anylabelwp_render_forms_settings', [$this, 'render_settings']);
-        } else {
-            add_action('admin_notices', [$this, 'fluent_forms_not_active_notice']);
         }
     }
 

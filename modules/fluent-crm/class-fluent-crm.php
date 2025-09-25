@@ -14,8 +14,6 @@ class AnylabelWP_Fluent_CRM
             add_action('admin_menu', [$this, 'change_fluent_crm_menu_name'], 999);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('anylabelwp_render_crm_settings', [$this, 'render_settings']);
-        } else {
-            add_action('admin_notices', [$this, 'fluent_crm_not_active_notice']);
         }
     }
 
