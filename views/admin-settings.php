@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
             'smtp' => is_plugin_active('fluent-smtp/fluent-smtp.php'),
             'forms' => is_plugin_active('fluentform/fluentform.php'),
             'crm' => is_plugin_active('fluent-crm/fluent-crm.php'),
-            'socials' => is_plugin_active('wp-social-ninja/wp-social-ninja.php')
+            'socials' => is_plugin_active('wp-social-reviews/wp-social-reviews.php')
         ];
         ?>
         <a href="<?php echo esc_url(add_query_arg(['page' => 'anylabelwp-settings', 'tab' => 'general'])); ?>"

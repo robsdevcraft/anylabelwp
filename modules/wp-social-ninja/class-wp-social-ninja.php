@@ -26,7 +26,7 @@ class AnylabelWP_WP_Social_Ninja
      */
     private function is_wp_social_ninja_active()
     {
-        return function_exists('is_plugin_active') && is_plugin_active('wp-social-ninja/wp-social-ninja.php');
+        return function_exists('is_plugin_active') && is_plugin_active('wp-social-reviews/wp-social-reviews.php');
     }
 
     /**
