@@ -23,9 +23,6 @@ class Loader
         
         // Add plugin meta links
         add_filter('plugin_row_meta', [$this, 'add_plugin_meta_links'], 10, 2);
-        
-        // Admin notices
-        add_action('admin_notices', [$this, 'admin_notices']);
 
         $this->load_modules();
     }
