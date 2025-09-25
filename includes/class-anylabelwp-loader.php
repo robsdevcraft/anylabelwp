@@ -112,7 +112,7 @@ class Loader
             'fluent-smtp/fluent-smtp.php' => 'FluentSMTP',
             'fluentform/fluentform.php' => 'Fluent Forms',
             'fluent-crm/fluent-crm.php' => 'FluentCRM',
-            'wp-social-ninja/wp-social-ninja.php' => 'WP Social Ninja'
+            'wp-social-reviews/wp-social-reviews.php' => 'WP Social Ninja'
         ];
         
         $inactive_plugins = [];

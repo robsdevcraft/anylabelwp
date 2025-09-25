@@ -165,16 +165,4 @@ class AnylabelWP_Fluent_SMTP
         </div>
         <?php
     }
-
-    /**
-     * Admin notice if Fluent SMTP is not active
-     */
-    public function fluent_smtp_not_active_notice()
-    {
-        ?>
-        <div class="notice notice-warning is-dismissible">
-            <p><?php echo esc_html__('Fluent SMTP is not active. AnylabelWP customizations for Fluent SMTP will not be applied.', 'anylabelwp-plugin'); ?></p>
-        </div>
-        <?php
-    }
 }

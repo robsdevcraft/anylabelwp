@@ -150,16 +150,4 @@ class AnylabelWP_WP_Social_Ninja
         </div>
         <?php
     }
-
-    /**
-    * Admin notice if WP Social Ninja is not active
-    */
-    public function wp_social_ninja_not_active_notice()
-    {
-        ?>
-        <div class="notice notice-warning is-dismissible">
-            <p><?php echo esc_html__('WP Social Ninja is not active. AnylabelWP customizations for WP Social Ninja will not be applied.', 'anylabelwp-plugin'); ?></p>
-        </div>
-        <?php
-    }
 }

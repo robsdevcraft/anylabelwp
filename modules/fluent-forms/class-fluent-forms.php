@@ -150,16 +150,4 @@ class AnylabelWP_Fluent_Forms
         </div>
         <?php
     }
-
-    /**
-     * Admin notice if Fluent Forms is not active
-     */
-    public function fluent_forms_not_active_notice()
-    {
-        ?>
-        <div class="notice notice-warning is-dismissible">
-            <p><?php echo esc_html__('Fluent Forms is not active. AnylabelWP customizations for Fluent Forms will not be applied.', 'anylabelwp-plugin'); ?></p>
-        </div>
-        <?php
-    }
 }

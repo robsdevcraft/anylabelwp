@@ -150,16 +150,4 @@ class AnylabelWP_Fluent_CRM
         </div>
         <?php
     }
-
-    /**
-    * Admin notice if Fluent CRM is not active
-    */
-    public function fluent_crm_not_active_notice()
-    {
-        ?>
-        <div class="notice notice-warning is-dismissible">
-            <p><?php echo esc_html__('Fluent CRM is not active. AnylabelWP customizations for Fluent CRM will not be applied.', 'anylabelwp-plugin'); ?></p>
-        </div>
-        <?php
-    }
 }
