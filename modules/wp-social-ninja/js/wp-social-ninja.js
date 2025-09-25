@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const newImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
+    const customImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
+    const defaultImageUrl = anylabelwp.default_url; // Get the default URL
     const logoContainer = document.querySelector('.wpsr-admin-logo');  // Target the logo container
 
-    if (logoContainer && newImageUrl) {
+    // Use custom logo if available, otherwise use default
+    const imageUrl = customImageUrl && customImageUrl.trim() !== '' ? customImageUrl : defaultImageUrl;
+
+    if (logoContainer && imageUrl) {
         // Create a new image element
         const newImage = new Image();
         
@@ -19,13 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         newImage.onerror = function() {
-            console.error('Failed to load the new logo image:', newImageUrl);
+            console.error('Failed to load the new logo image:', imageUrl);
             // Keep the original SVG logo in case of error
         };
 
         // Set the src to trigger loading
-        newImage.src = newImageUrl;
+        newImage.src = imageUrl;
     } else {
-        console.warn('Logo container element not found or new image URL is missing');
+        console.warn('Logo container element not found or image URL is missing');
     }
 });

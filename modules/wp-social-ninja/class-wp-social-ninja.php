@@ -26,7 +26,7 @@ class AnylabelWP_WP_Social_Ninja
      */
     private function is_wp_social_ninja_active()
     {
-        return function_exists('is_plugin_active') && is_plugin_active('wp-social-reviews/wp-social-reviews.php');
+        return function_exists('is_plugin_active') && is_plugin_active('wp-social-ninja/wp-social-ninja.php');
     }
 
     /**
@@ -98,20 +98,6 @@ class AnylabelWP_WP_Social_Ninja
     }
 
     /**
-     * Validate logo URL setting
-     *
-     * @param string $url
-     * @return bool
-     */
-    public function validate_logo_url($url)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Render the WP Social Ninja tab content in admin-settings.php
      */
     public function render_settings()
@@ -120,32 +106,42 @@ class AnylabelWP_WP_Social_Ninja
             wp_die(__('You do not have sufficient permissions to access this page.', 'anylabelwp-plugin'));
         }
 
-        $current_logo_url = get_option('anylabelwp_wp_social_ninja_logo_url');
-        $default_logo_url = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-social-default.png';
-
         wp_nonce_field('anylabelwp_wp_social_ninja_settings', 'anylabelwp_wp_social_ninja_nonce');
+        
+        $current_logo = get_option('anylabelwp_wp_social_ninja_logo_url', '');
+        $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-social-default.png';
         ?>
         <div class="tab-content wp-social-ninja-settings">
             <h2><?php esc_html_e('WP Social Ninja Settings', 'anylabelwp-plugin'); ?></h2>
+            
+            <!-- Default Logo Preview -->
+            <h3><?php _e('Default Logo', 'anylabelwp-plugin'); ?></h3>
+            <div style="margin: 10px 0;">
+                <img src="<?php echo esc_url($default_logo); ?>" 
+                     alt="<?php _e('Default Social Logo', 'anylabelwp-plugin'); ?>" 
+                     style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
+                <p class="description"><?php _e('This is the default logo that will be used if no custom logo is set.', 'anylabelwp-plugin'); ?></p>
+            </div>
+
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Custom WP Social Ninja Logo', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom WP Social Ninja Logo URL', 'anylabelwp-plugin'); ?></th>
                     <td>
-                        <input 
-                            type="url" 
-                            name="anylabelwp_wp_social_ninja_logo_url" 
-                            value="<?php echo esc_attr($current_logo_url); ?>" 
-                            placeholder="<?php esc_attr_e('Enter logo URL (leave blank for default)', 'anylabelwp-plugin'); ?>"
-                            style="width: 400px;"
-                        />
+                        <input type="url" 
+                               name="anylabelwp_wp_social_ninja_logo_url" 
+                               value="<?php echo esc_attr($current_logo); ?>" 
+                               class="regular-text" 
+                               placeholder="<?php _e('Enter custom logo URL or leave empty to use default', 'anylabelwp-plugin'); ?>" />
+                        <p class="description">
+                            <?php _e('Enter a custom logo URL, or leave empty to use the default logo above.', 'anylabelwp-plugin'); ?>
+                        </p>
+                        
+                        <?php if (!empty($current_logo)): ?>
                         <div style="margin-top: 10px;">
-                            <p><strong><?php esc_html_e('Default Logo:', 'anylabelwp-plugin'); ?></strong></p>
-                            <img src="<?php echo esc_url($default_logo_url); ?>" alt="Default Social Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px;" />
-                        </div>
-                        <?php if (!empty($current_logo_url)) : ?>
-                        <div style="margin-top: 10px;">
-                            <p><strong><?php esc_html_e('Current Logo:', 'anylabelwp-plugin'); ?></strong></p>
-                            <img src="<?php echo esc_url($current_logo_url); ?>" alt="Current Social Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px;" />
+                            <strong><?php _e('Current Custom Logo:', 'anylabelwp-plugin'); ?></strong><br/>
+                            <img src="<?php echo esc_url($current_logo); ?>" 
+                                 alt="<?php _e('Current Custom Logo', 'anylabelwp-plugin'); ?>" 
+                                 style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
                         </div>
                         <?php endif; ?>
                     </td>
@@ -166,5 +162,4 @@ class AnylabelWP_WP_Social_Ninja
         </div>
         <?php
     }
-
 }

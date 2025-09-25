@@ -34,10 +34,6 @@ class AnylabelWP_Fluent_Forms
      */
     public function enqueue_scripts()
     {
-        //Debug page
-        //error_log('Current $_GET["page"] value: ' . (isset($_GET['page']) ? $_GET['page'] : 'Not set'));
-
-        // Change 'fluent_forms' to the actual page slug used by Fluent Forms
         if ((isset($_GET['page']) && strpos($_GET['page'], 'fluent_forms') !== false)) {
         
             wp_enqueue_style(
@@ -102,20 +98,6 @@ class AnylabelWP_Fluent_Forms
     }
 
     /**
-     * Validate logo URL setting
-     *
-     * @param string $url
-     * @return bool
-     */
-    public function validate_logo_url($url)
-    {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Render the Fluent Forms tab content in admin-settings.php
      */
     public function render_settings()
@@ -124,32 +106,42 @@ class AnylabelWP_Fluent_Forms
             wp_die(__('You do not have sufficient permissions to access this page.', 'anylabelwp-plugin'));
         }
 
-        $current_logo_url = get_option('anylabelwp_fluent_forms_logo_url');
-        $default_logo_url = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-forms-default.png';
-
         wp_nonce_field('anylabelwp_fluent_forms_settings', 'anylabelwp_fluent_forms_nonce');
+        
+        $current_logo = get_option('anylabelwp_fluent_forms_logo_url', '');
+        $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-forms-default.png';
         ?>
         <div class="tab-content forms-settings">
             <h2><?php esc_html_e('Fluent Forms Settings', 'anylabelwp-plugin'); ?></h2>
+            
+            <!-- Default Logo Preview -->
+            <h3><?php _e('Default Logo', 'anylabelwp-plugin'); ?></h3>
+            <div style="margin: 10px 0;">
+                <img src="<?php echo esc_url($default_logo); ?>" 
+                     alt="<?php _e('Default Forms Logo', 'anylabelwp-plugin'); ?>" 
+                     style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
+                <p class="description"><?php _e('This is the default logo that will be used if no custom logo is set.', 'anylabelwp-plugin'); ?></p>
+            </div>
+
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Custom Fluent Forms Logo', 'anylabelwp-plugin'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom Fluent Forms Logo URL', 'anylabelwp-plugin'); ?></th>
                     <td>
-                        <input 
-                            type="url" 
-                            name="anylabelwp_fluent_forms_logo_url" 
-                            value="<?php echo esc_attr($current_logo_url); ?>" 
-                            placeholder="<?php esc_attr_e('Enter logo URL (leave blank for default)', 'anylabelwp-plugin'); ?>"
-                            style="width: 400px;"
-                        />
+                        <input type="url" 
+                               name="anylabelwp_fluent_forms_logo_url" 
+                               value="<?php echo esc_attr($current_logo); ?>" 
+                               class="regular-text" 
+                               placeholder="<?php _e('Enter custom logo URL or leave empty to use default', 'anylabelwp-plugin'); ?>" />
+                        <p class="description">
+                            <?php _e('Enter a custom logo URL, or leave empty to use the default logo above.', 'anylabelwp-plugin'); ?>
+                        </p>
+                        
+                        <?php if (!empty($current_logo)): ?>
                         <div style="margin-top: 10px;">
-                            <p><strong><?php esc_html_e('Default Logo:', 'anylabelwp-plugin'); ?></strong></p>
-                            <img src="<?php echo esc_url($default_logo_url); ?>" alt="Default Forms Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px;" />
-                        </div>
-                        <?php if (!empty($current_logo_url)) : ?>
-                        <div style="margin-top: 10px;">
-                            <p><strong><?php esc_html_e('Current Logo:', 'anylabelwp-plugin'); ?></strong></p>
-                            <img src="<?php echo esc_url($current_logo_url); ?>" alt="Current Forms Logo" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px;" />
+                            <strong><?php _e('Current Custom Logo:', 'anylabelwp-plugin'); ?></strong><br/>
+                            <img src="<?php echo esc_url($current_logo); ?>" 
+                                 alt="<?php _e('Current Custom Logo', 'anylabelwp-plugin'); ?>" 
+                                 style="max-height: 40px; border: 1px solid #ddd; padding: 5px;" />
                         </div>
                         <?php endif; ?>
                     </td>
