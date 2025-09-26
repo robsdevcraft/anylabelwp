@@ -206,6 +206,11 @@ li#wp-admin-bar-wp-logo.menupop {
     display: none;
 }
 
+/* Remove Home Dashicon */
+.wp-admin #wpadminbar #wp-admin-bar-site-name>.ab-item:before {
+    display: none;
+}
+
 /* Remove Thank you for using WordPress */
 span#footer-thankyou {
     display: none
