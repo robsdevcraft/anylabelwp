@@ -1,3 +1,5 @@
+![Image of Anylabel WP logo](/assets/images/defaults/anylabelwp.logo.png "AnylabelWP logo")
+
 # AnylabelWP WordPress Plugin
 
 A free, GPL licensed, open-source plugin to customize the appearance of 3rd-Party Plugins for a more unified and product-agnostic user experience.
