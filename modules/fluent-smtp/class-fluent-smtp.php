@@ -141,21 +141,25 @@ class AnylabelWP_Fluent_SMTP
                     <th scope="row"><?php esc_html_e('Custom Fluent SMTP Logo URL', 'anylabelwp-plugin'); ?></th>
                     <td>
                         <div 
-                            class="anylabelwp-logo-control"
+                            class="anylabelwp-logo-control<?php echo !empty($current_logo) ? ' anylabelwp-logo-active' : ''; ?>"
                             data-default-url="<?php echo esc_attr($default_logo); ?>"
-                            data-status-default="<?php echo esc_attr__('Default logo in use.', 'anylabelwp-plugin'); ?>"
-                            data-status-custom="<?php echo esc_attr__('Custom logo in use.', 'anylabelwp-plugin'); ?>"
                             data-media-title="<?php echo esc_attr__('Select an SMTP Logo', 'anylabelwp-plugin'); ?>"
                             data-media-button="<?php echo esc_attr__('Use this logo', 'anylabelwp-plugin'); ?>"
                         >
-                            <div class="anylabelwp-logo-input">
+                            <label class="anylabelwp-logo-toggle">
+                                <input type="checkbox"
+                                       class="anylabelwp-logo-toggle-checkbox"
+                                       <?php checked(!empty($current_logo)); ?> />
+                                <?php esc_html_e('Use custom logo?', 'anylabelwp-plugin'); ?>
+                            </label>
+                            <div class="anylabelwp-logo-custom-fields">
                                 <input type="url" 
                                        name="anylabelwp_fluent_smtp_logo_url" 
                                        value="<?php echo esc_attr($current_logo); ?>" 
                                        class="regular-text anylabelwp-logo-field" 
-                                       placeholder="<?php _e('Enter custom logo URL or leave empty to use default', 'anylabelwp-plugin'); ?>" />
+                                       placeholder="<?php _e('Enter custom logo URL or choose from the media library', 'anylabelwp-plugin'); ?>" />
                                 <p class="description">
-                                    <?php _e('Enter a custom logo URL, choose one from the media library, or reset to the default logo.', 'anylabelwp-plugin'); ?>
+                                    <?php _e('Pick an image from the media library or paste a logo URL. Leave blank to keep the default logo.', 'anylabelwp-plugin'); ?>
                                 </p>
                                 <div class="anylabelwp-logo-actions">
                                     <button type="button" class="button button-secondary anylabelwp-logo-media">
@@ -165,19 +169,6 @@ class AnylabelWP_Fluent_SMTP
                                         <?php esc_html_e('Use Default Logo', 'anylabelwp-plugin'); ?>
                                     </button>
                                 </div>
-                            </div>
-                            <div class="anylabelwp-logo-preview-wrap">
-                                <strong class="anylabelwp-logo-preview-heading"><?php esc_html_e('Current Preview', 'anylabelwp-plugin'); ?></strong>
-                                <img 
-                                    src="<?php echo esc_url(!empty($current_logo) ? $current_logo : $default_logo); ?>" 
-                                    alt="<?php esc_attr_e('Current SMTP Logo Preview', 'anylabelwp-plugin'); ?>" 
-                                    class="anylabelwp-logo-preview"
-                                />
-                                <p class="description anylabelwp-logo-status">
-                                    <?php echo empty($current_logo)
-                                        ? esc_html__('Default logo in use.', 'anylabelwp-plugin')
-                                        : esc_html__('Custom logo in use.', 'anylabelwp-plugin'); ?>
-                                </p>
                             </div>
                         </div>
                     </td>

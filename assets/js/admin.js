@@ -42,110 +42,130 @@
                 return;
             }
 
-            if (!wp || !wp.media) {
-                console.warn('AnylabelWP: wp.media is not available. Media picker will be disabled.');
-                return;
-            }
-
             var controls = document.querySelectorAll('.anylabelwp-logo-control');
             if (!controls.length) {
                 return;
+            }
+
+            var mediaAvailable = !!(wp && wp.media);
+            if (!mediaAvailable) {
+                console.warn('AnylabelWP: wp.media is not available. Media picker button will be disabled.');
             }
 
             controls.forEach(function(control) {
                 var field = control.querySelector('.anylabelwp-logo-field');
                 var mediaButton = control.querySelector('.anylabelwp-logo-media');
                 var resetButton = control.querySelector('.anylabelwp-logo-reset');
-                var preview = control.querySelector('.anylabelwp-logo-preview');
-                var status = control.querySelector('.anylabelwp-logo-status');
+                var toggle = control.querySelector('.anylabelwp-logo-toggle-checkbox');
+                var customFields = control.querySelector('.anylabelwp-logo-custom-fields');
 
-                if (!field || !preview) {
+                if (!field || !toggle || !customFields) {
                     return;
                 }
 
-                var defaultUrl = control.dataset.defaultUrl || '';
-                var statusDefault = control.dataset.statusDefault || '';
-                var statusCustom = control.dataset.statusCustom || '';
                 var mediaTitle = control.dataset.mediaTitle || 'Select Image';
                 var mediaButtonText = control.dataset.mediaButton || 'Use this image';
                 var frame = null;
 
-                var updatePreview = function(url) {
-                    var trimmed = (url || '').trim();
-                    var finalUrl = trimmed.length ? trimmed : defaultUrl;
-
-                    preview.src = finalUrl || preview.src;
-
-                    if (status) {
-                        status.textContent = trimmed.length ? statusCustom : statusDefault;
+                var setCustomActive = function(active) {
+                    if (active) {
+                        control.classList.add('anylabelwp-logo-active');
+                        customFields.style.display = '';
+                    } else {
+                        control.classList.remove('anylabelwp-logo-active');
+                        customFields.style.display = 'none';
                     }
                 };
 
-                updatePreview(field.value);
-
-                var openMediaFrame = function() {
-                    if (frame) {
-                        frame.open();
-                        return;
-                    }
-
-                    frame = wp.media({
-                        title: mediaTitle,
-                        button: {
-                            text: mediaButtonText
-                        },
-                        library: {
-                            type: 'image'
-                        },
-                        multiple: false
-                    });
-
-                    frame.on('select', function() {
-                        var selection = frame.state().get('selection');
-                        var attachment = selection && selection.first();
-
-                        if (!attachment) {
-                            return;
-                        }
-
-                        var data = attachment.toJSON();
-
-                        if (!data || !data.url) {
-                            return;
-                        }
-
-                        field.value = data.url;
-                        updatePreview(data.url);
-                        field.dispatchEvent(new Event('change', { bubbles: true }));
-                        field.dispatchEvent(new Event('input', { bubbles: true }));
-                    });
-
-                    frame.open();
+                var clearField = function() {
+                    field.value = '';
+                    field.dispatchEvent(new Event('change', { bubbles: true }));
+                    field.dispatchEvent(new Event('input', { bubbles: true }));
                 };
+
+                var initialActive = toggle.checked || (field.value && field.value.trim().length > 0);
+                toggle.checked = initialActive;
+                setCustomActive(initialActive);
+
+                toggle.addEventListener('change', function() {
+                    if (toggle.checked) {
+                        setCustomActive(true);
+                    } else {
+                        setCustomActive(false);
+                        clearField();
+                    }
+                });
 
                 if (mediaButton) {
-                    mediaButton.addEventListener('click', function(event) {
-                        event.preventDefault();
-                        openMediaFrame();
-                    });
+                    if (!mediaAvailable) {
+                        mediaButton.classList.add('disabled');
+                        mediaButton.setAttribute('disabled', 'disabled');
+                        mediaButton.title = 'Media library unavailable';
+                    } else {
+                        mediaButton.addEventListener('click', function(event) {
+                            event.preventDefault();
+
+                            if (!toggle.checked) {
+                                toggle.checked = true;
+                                setCustomActive(true);
+                            }
+
+                            if (frame) {
+                                frame.open();
+                                return;
+                            }
+
+                            frame = wp.media({
+                                title: mediaTitle,
+                                button: {
+                                    text: mediaButtonText
+                                },
+                                library: {
+                                    type: 'image'
+                                },
+                                multiple: false
+                            });
+
+                            frame.on('select', function() {
+                                var selection = frame.state().get('selection');
+                                var attachment = selection && selection.first();
+
+                                if (!attachment) {
+                                    return;
+                                }
+
+                                var data = attachment.toJSON();
+
+                                if (!data || !data.url) {
+                                    return;
+                                }
+
+                                field.value = data.url;
+                                field.dispatchEvent(new Event('change', { bubbles: true }));
+                                field.dispatchEvent(new Event('input', { bubbles: true }));
+                            });
+
+                            frame.open();
+                        });
+                    }
                 }
 
                 if (resetButton) {
                     resetButton.addEventListener('click', function(event) {
                         event.preventDefault();
-                        field.value = '';
-                        updatePreview('');
-                        field.dispatchEvent(new Event('change', { bubbles: true }));
-                        field.dispatchEvent(new Event('input', { bubbles: true }));
+                        toggle.checked = false;
+                        setCustomActive(false);
+                        clearField();
                     });
                 }
 
-                field.addEventListener('change', function() {
-                    updatePreview(field.value);
-                });
-
                 field.addEventListener('input', function() {
-                    updatePreview(field.value);
+                    if (field.value && field.value.trim().length > 0) {
+                        if (!toggle.checked) {
+                            toggle.checked = true;
+                            setCustomActive(true);
+                        }
+                    }
                 });
             });
         }
