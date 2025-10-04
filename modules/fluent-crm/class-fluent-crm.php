@@ -53,7 +53,7 @@ class AnylabelWP_Fluent_CRM
                 'anylabelwp',
                 [
                     'new_url' => esc_url(get_option('anylabelwp_fluent_crm_logo_url')),
-                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-crm-default.png'),
+                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentcrm-default.svg'),
                 ]
             );
         }
@@ -107,7 +107,7 @@ class AnylabelWP_Fluent_CRM
         wp_nonce_field('anylabelwp_fluent_crm_settings', 'anylabelwp_fluent_crm_nonce');
         
     $current_logo = get_option('anylabelwp_fluent_crm_logo_url', '');
-    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-crm-default.png';
+    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentcrm-default.svg';
         ?>
         <div class="tab-content crm-settings">
             <h2><?php esc_html_e('Fluent CRM Settings', 'anylabelwp-plugin'); ?></h2>

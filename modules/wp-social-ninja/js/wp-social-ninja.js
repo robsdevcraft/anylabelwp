@@ -1,34 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('AnylabelWP WP Social Ninja: Script loaded');
     const customImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
     const defaultImageUrl = anylabelwp.default_url; // Get the default URL
+    console.log('AnylabelWP WP Social Ninja: Custom URL:', customImageUrl);
+    console.log('AnylabelWP WP Social Ninja: Default URL:', defaultImageUrl);
+    
     const logoContainer = document.querySelector('.wpsr-admin-logo');  // Target the logo container
+    console.log('AnylabelWP WP Social Ninja: Logo element found:', logoContainer);
 
     // Use custom logo if available, otherwise use default
     const imageUrl = customImageUrl && customImageUrl.trim() !== '' ? customImageUrl : defaultImageUrl;
+    console.log('AnylabelWP WP Social Ninja: Using URL:', imageUrl);
 
     if (logoContainer && imageUrl) {
-        // Create a new image element
-        const newImage = new Image();
+        console.log('AnylabelWP WP Social Ninja: Forcing logo update');
+        console.log('AnylabelWP WP Social Ninja: Target container:', logoContainer);
+        console.log('AnylabelWP WP Social Ninja: New URL:', imageUrl);
         
-        newImage.onload = function() {
-            // Once the image has loaded successfully, replace the SVG with the new image
-            logoContainer.innerHTML = ''; // Clear the SVG
-            
-            // Style the new image appropriately
-            newImage.style.maxWidth = '100%';
-            newImage.style.maxHeight = '45px'; // Adjust this value as needed
-            
-            // Add the new image to the container
-            logoContainer.appendChild(newImage);
-        };
-
-        newImage.onerror = function() {
-            console.error('Failed to load the new logo image:', imageUrl);
-            // Keep the original SVG logo in case of error
-        };
-
-        // Set the src to trigger loading
+        // Clear and create new image
+        logoContainer.innerHTML = '';
+        const newImage = document.createElement('img');
         newImage.src = imageUrl;
+        newImage.style.cssText = 'width: auto !important; max-width: 120px !important; height: auto !important; max-height: 45px !important; display: block !important;';
+        logoContainer.appendChild(newImage);
+        
+        // Log final state
+        setTimeout(() => {
+            console.log('AnylabelWP WP Social Ninja: Final container HTML:', logoContainer.innerHTML);
+            console.log('AnylabelWP WP Social Ninja: Final display:', window.getComputedStyle(newImage).display);
+            console.log('AnylabelWP WP Social Ninja: Final visibility:', window.getComputedStyle(newImage).visibility);
+        }, 100);
     } else {
         console.warn('Logo container element not found or image URL is missing');
     }

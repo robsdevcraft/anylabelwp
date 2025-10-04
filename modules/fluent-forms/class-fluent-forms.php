@@ -53,7 +53,7 @@ class AnylabelWP_Fluent_Forms
                 'anylabelwp',
                 [
                     'new_url' => esc_url(get_option('anylabelwp_fluent_forms_logo_url')),
-                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-forms-default.png'),
+                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentform-default.svg'),
                 ]
             );
         }
@@ -107,7 +107,7 @@ class AnylabelWP_Fluent_Forms
         wp_nonce_field('anylabelwp_fluent_forms_settings', 'anylabelwp_fluent_forms_nonce');
         
     $current_logo = get_option('anylabelwp_fluent_forms_logo_url', '');
-    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-forms-default.png';
+    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentform-default.svg';
         ?>
         <div class="tab-content forms-settings">
             <h2><?php esc_html_e('Fluent Forms Settings', 'anylabelwp-plugin'); ?></h2>

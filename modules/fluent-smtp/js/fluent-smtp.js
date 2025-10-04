@@ -1,32 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('AnylabelWP Fluent SMTP: Script loaded');
     const customImageUrl = anylabelwp.new_url;  // Get the saved URL from PHP
     const defaultImageUrl = anylabelwp.default_url; // Get the default URL
+    console.log('AnylabelWP Fluent SMTP: Custom URL:', customImageUrl);
+    console.log('AnylabelWP Fluent SMTP: Default URL:', defaultImageUrl);
+    
     const logoImage = document.querySelector('body.settings_page_fluent-mail .logo img');  // Target the img tag inside the .logo div
+    console.log('AnylabelWP Fluent SMTP: Logo element found:', logoImage);
 
     // Use custom logo if available, otherwise use default
     const imageUrl = customImageUrl && customImageUrl.trim() !== '' ? customImageUrl : defaultImageUrl;
+    console.log('AnylabelWP Fluent SMTP: Using URL:', imageUrl);
 
     if (logoImage && imageUrl) {
-        // Create a new image object and set its src to the new image URL
-        const newImage = new Image();
+        console.log('AnylabelWP Fluent SMTP: Forcing logo update');
+        console.log('AnylabelWP Fluent SMTP: Target element:', logoImage);
+        console.log('AnylabelWP Fluent SMTP: New URL:', imageUrl);
         
-        newImage.onload = function() {
-            // Once the new image has finished loading, update the src of the logo image
-            logoImage.src = imageUrl;
-            // Style using object properties to overide default css from fluent smtp
-            Object.assign(logoImage.style, {
-                display: 'block',
-                width: 'auto',       
-            });
-        };
-
-        newImage.onerror = function() {
-            console.error('Failed to load the logo image:', imageUrl);
-            // Optionally, you can show the original logo or a fallback image
-            logoImage.style.display = 'block';
-        };
-
-        newImage.src = imageUrl;
+        // Force update immediately without preload
+        logoImage.src = imageUrl;
+        logoImage.setAttribute('src', imageUrl);
+        logoImage.removeAttribute('style'); // Clear any existing inline styles first
+        logoImage.style.cssText = 'display: block !important; width: auto !important; max-width: 140px !important; height: auto !important; margin-top: 0.8rem !important; visibility: visible !important; opacity: 1 !important;';
+        
+        // Log final state
+        setTimeout(() => {
+            console.log('AnylabelWP Fluent SMTP: Final src:', logoImage.src);
+            console.log('AnylabelWP Fluent SMTP: Final display:', window.getComputedStyle(logoImage).display);
+            console.log('AnylabelWP Fluent SMTP: Final visibility:', window.getComputedStyle(logoImage).visibility);
+            console.log('AnylabelWP Fluent SMTP: Final opacity:', window.getComputedStyle(logoImage).opacity);
+            console.log('AnylabelWP Fluent SMTP: Image dimensions:', logoImage.width, 'x', logoImage.height);
+            console.log('AnylabelWP Fluent SMTP: Computed width/height:', window.getComputedStyle(logoImage).width, window.getComputedStyle(logoImage).height);
+            console.log('AnylabelWP Fluent SMTP: Parent element:', logoImage.parentElement);
+            console.log('AnylabelWP Fluent SMTP: Parent display:', window.getComputedStyle(logoImage.parentElement).display);
+        }, 100);
     } else {
         console.warn('Logo image element not found or image URL is missing');
         if (logoImage) {

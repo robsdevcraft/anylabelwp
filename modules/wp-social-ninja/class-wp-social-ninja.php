@@ -53,7 +53,7 @@ class AnylabelWP_WP_Social_Ninja
                 'anylabelwp',
                 [
                     'new_url' => esc_url(get_option('anylabelwp_wp_social_ninja_logo_url')),
-                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-social-default.png'),
+                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-wpsocialninja-default.svg'),
                 ]
             );
         }
@@ -107,7 +107,7 @@ class AnylabelWP_WP_Social_Ninja
         wp_nonce_field('anylabelwp_wp_social_ninja_settings', 'anylabelwp_wp_social_ninja_nonce');
         
     $current_logo = get_option('anylabelwp_wp_social_ninja_logo_url', '');
-    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-social-default.png';
+    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-wpsocialninja-default.svg';
         ?>
         <div class="tab-content wp-social-ninja-settings">
             <h2><?php esc_html_e('WP Social Ninja Settings', 'anylabelwp-plugin'); ?></h2>

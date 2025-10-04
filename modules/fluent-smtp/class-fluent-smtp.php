@@ -52,7 +52,7 @@ class AnylabelWP_Fluent_SMTP
                 'anylabelwp',
                 [
                     'new_url' => esc_url(get_option('anylabelwp_fluent_smtp_logo_url')),
-                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-smtp-default.png'),
+                    'default_url' => esc_url(ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentsmtp-default.svg'),
                 ]
             );
         }
@@ -122,7 +122,7 @@ class AnylabelWP_Fluent_SMTP
         wp_nonce_field('anylabelwp_fluent_smtp_settings', 'anylabelwp_fluent_smtp_nonce');
         
     $current_logo = get_option('anylabelwp_fluent_smtp_logo_url', '');
-    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-smtp-default.png';
+    $default_logo = ANYLABELWP_PLUGIN_URL . 'assets/images/defaults/anylabel-fluentsmtp-default.svg';
         ?>
         <div class="tab-content smtp-settings">
             <h2><?php esc_html_e('Fluent SMTP Settings', 'anylabelwp-plugin'); ?></h2>

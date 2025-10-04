@@ -2,11 +2,19 @@
     AnylabelWP Custom Fluent SMTP CSS
 */
 
-/* Hide the logo initially, then apply properties to new image */
+/* Hide the logo initially, then JavaScript will show it with the new logo */
 body.settings_page_fluent-mail .logo img {
     margin-top: .8rem;
     align-items: center;
     display: none;
+}
+
+/* Force show the logo after JavaScript updates it */
+body.settings_page_fluent-mail .logo img[src*="anylabel"] {
+    display: block !important;
+    width: auto !important;
+    max-width: 140px !important;
+    height: auto !important;
 }
 
 /* Hide the default Alerts, About, and Documentation page links */
