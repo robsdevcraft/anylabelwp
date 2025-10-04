@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Force update immediately without preload
         logoImage.src = imageUrl;
         logoImage.setAttribute('src', imageUrl);
-        logoImage.style.cssText = 'display: block !important; width: auto !important; max-width: 120px !important; height: auto !important;';
+        logoImage.style.cssText = 'display: block !important; width: 120px !important; height: auto !important;';
         
         // Log final state
         setTimeout(() => {

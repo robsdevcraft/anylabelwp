@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoContainer.innerHTML = '';
         const newImage = document.createElement('img');
         newImage.src = imageUrl;
-        newImage.style.cssText = 'width: auto !important; max-width: 120px !important; height: auto !important; max-height: 45px !important; display: block !important;';
+        newImage.style.cssText = 'width: 120px !important; height: auto !important; max-height: 45px !important; display: block !important;';
         logoContainer.appendChild(newImage);
         
         // Log final state

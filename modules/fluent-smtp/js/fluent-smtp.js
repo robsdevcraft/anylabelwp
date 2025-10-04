@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoImage.src = imageUrl;
         logoImage.setAttribute('src', imageUrl);
         logoImage.removeAttribute('style'); // Clear any existing inline styles first
-        logoImage.style.cssText = 'display: block !important; width: auto !important; max-width: 140px !important; height: auto !important; margin-top: 0.8rem !important; visibility: visible !important; opacity: 1 !important;';
+        logoImage.style.cssText = 'display: block !important; width: 140px !important; height: auto !important; margin-top: 0.8rem !important; visibility: visible !important; opacity: 1 !important;';
         
         // Log final state
         setTimeout(() => {
