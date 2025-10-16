@@ -91,6 +91,6 @@ AnylabelWP is licensed under the **GPLv2 or later**.
 
 ## Credits
 
-Developed by [WPOperator](https://wpoperator.com)
+Developed by [Rob](https://robsdevcraft.com)
 
 ## Changelog
