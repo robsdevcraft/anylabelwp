@@ -71,7 +71,18 @@
 
 .anylabelwp-logo-reset.button-link {
     padding-left: 0;
+    color: red;
+    
 }
+
+.anylabelwp-logo-reset.button-link:hover {
+    padding-left: 0;
+    color: red;
+    box-shadow: none;
+    outline: none;
+    background: none;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

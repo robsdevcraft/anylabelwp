@@ -150,7 +150,7 @@ class AnylabelWP_WP_Social_Ninja
                                     <button type="button" class="button button-secondary anylabelwp-logo-media">
                                         <?php esc_html_e('Choose from Media Library', 'anylabelwp-plugin'); ?>
                                     </button>
-                                    <button type="button" class="button button-link anylabelwp-logo-reset">
+                                    <button type="button" class="Sanylabelwp-logo-reset">
                                         <?php esc_html_e('Cancel', 'anylabelwp-plugin'); ?>
                                     </button>
                                 </div>
