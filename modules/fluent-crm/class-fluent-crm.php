@@ -151,7 +151,7 @@ class AnylabelWP_Fluent_CRM
                                         <?php esc_html_e('Choose from Media Library', 'anylabelwp-plugin'); ?>
                                     </button>
                                     <button type="button" class="button button-link anylabelwp-logo-reset">
-                                        <?php esc_html_e('Use Default Logo', 'anylabelwp-plugin'); ?>
+                                        <?php esc_html_e('Cancel', 'anylabelwp-plugin'); ?>
                                     </button>
                                 </div>
                             </div>
